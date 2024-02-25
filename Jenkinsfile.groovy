@@ -20,8 +20,8 @@ pipeline {
         }
 
         failure {
-            mail body: 'Failure',
-                     subject: 'Test Subject',
+            mail body: 'Сборка прошла неуспешно. Обратите внимание',
+                     subject: 'kork',
                      to: 'jbeework@gmail.com'
         }
     }
