@@ -1,5 +1,6 @@
 pipeline {
-    agent awsssh
+    agent label {'awsssh'
+    }
 
     stages {
         stage('Example') {
