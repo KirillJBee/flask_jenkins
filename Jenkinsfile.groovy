@@ -1,5 +1,7 @@
 pipeline {
-    agent label {'awsssh'
+
+    agent {
+        label "awsssh"
     }
 
     stages {
