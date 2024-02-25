@@ -10,7 +10,7 @@ pipeline {
                 echo "Hello world"
             }
         }
-
+    }
      
     post {
         success {
@@ -26,3 +26,4 @@ pipeline {
         }
     }
 }
+
