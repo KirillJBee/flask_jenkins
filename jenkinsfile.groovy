@@ -2,8 +2,10 @@ pipeline {
     agent awsssh
 
     stages {
-        stage('build') {
-        }
+        stage('Example') {
+            step {
+                echo 'Hello World'
+            }}
     }
 
      
