@@ -24,13 +24,13 @@ pipeline {
 
         success {
             mail body: 'Сборка прошла успешно. Наши поздравления!',
-                     subject: 'Test Subject',
+                     subject: 'Успешная сборка',
                      to: 'jbeework@gmail.com'
         }
 
         failure {
             mail body: 'Сборка прошла неуспешно. Обратите внимание!',
-                     subject: 'kork',
+                     subject: 'Неуспешная сборка',
                      to: 'jbeework@gmail.com'
         }
     }
