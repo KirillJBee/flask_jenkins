@@ -5,7 +5,7 @@ pipeline {
     }
 
     stages {
-        stage('build') {
+        stage('build image') {
             steps {
                 sh "docker build . -t testfluskapp:V1.0" 
             }
@@ -19,11 +19,7 @@ pipeline {
         //}
 
 
-        stage('deploy') {
-            steps {
-                sh "echo OK!"
-            }
-        }
+        
     }
 
     post { 
