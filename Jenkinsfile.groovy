@@ -1,18 +1,27 @@
 pipeline {
 
     agent {
-        label "awsssh"
+        label 'awsssh'
     }
 
     stages {
-        stage('example') {
+        stage('build') {
             steps {
-                echo "Hello world"
+                docker build . -t testfluskapp:V1.0
+            }
+        }
+
+        stage('test') {
+            steps {
+                echo "Make test"
             }
         }
     }
 
+
+
     post {
+
         success {
             mail body: 'Сборка прошла успешно. Наши поздравления!',
                      subject: 'Test Subject',
