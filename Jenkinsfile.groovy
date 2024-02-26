@@ -41,7 +41,7 @@ pipeline {
         }
 
         aborted {
-            mail body: 'Сборка была прервана!Обратите внимание!',
+            mail body: 'Сборка была прервана! Обратите внимание!',
                      subject: 'Прерванная сборка',
                      to: 'jbeework@gmail.com'
         }
