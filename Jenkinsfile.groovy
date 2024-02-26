@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                docker build . -t testfluskapp:V1.0
+                docker build .-t testfluskapp:V1.0
             }
         }
 
