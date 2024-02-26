@@ -11,14 +11,12 @@ pipeline {
             }
         }
 
-       // stage('test') {
-         //   steps {
-           //     sh "docker run -d --rm testfluskapp:V1.0"
-            //}
-        //}
+    stage('test') {
+           steps {
+                sh "docker run -d --rm testfluskapp:V1.0"
+            }
+        }
     }
-
-
 
     post {
 
