@@ -26,7 +26,7 @@ pipeline {
         }
     }
 
-    post {
+    post { 
 
         success {
             mail body: 'Сборка прошла успешно. Наши поздравления!',
@@ -37,6 +37,12 @@ pipeline {
         failure {
             mail body: 'Сборка прошла неуспешно. Обратите внимание!',
                      subject: 'Неуспешная сборка',
+                     to: 'jbeework@gmail.com'
+        }
+
+        aborted {
+            mail body: 'Сборка была прервана!Обратите внимание!',
+                     subject: 'Прерванная сборка',
                      to: 'jbeework@gmail.com'
         }
     }
