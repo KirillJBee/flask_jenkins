@@ -11,9 +11,16 @@ pipeline {
             }
         }
 
-    stage('test') {
-           steps {
+        stage('deploy') {
+            steps {
                 sh "docker run -d --rm testfluskapp:V1.0"
+            }
+        }
+
+
+        stage('test') {
+            steps {
+                sh "curl http://172.0.0.1:8000"
             }
         }
     }
