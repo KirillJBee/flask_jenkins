@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('build docker image') {
             steps {
-                sh "docker build . -t testfluskapp:V1.0" 
+                sh "docker build -t ${DOCKER_IMAGE_NAME} ." 
             }
         }
 
