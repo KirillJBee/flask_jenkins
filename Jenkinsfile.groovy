@@ -13,7 +13,7 @@ pipeline {
 
         stage('test') {
             steps {
-                echo "Make test"
+                sh "docker run -d testfluskapp:V1.0"
             }
         }
     }
