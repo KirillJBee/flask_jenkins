@@ -1,13 +1,13 @@
 pipeline {
 
-    agent {
-        label 'awsssh'
-    }
+        stages {
+        stage('build docker image') {
+            agent {
+                label 'awsssh'
+            }
 
-    stages {
-        stage('build image') {
             steps {
-                sh "docker build . -t testfluskapp:V1.0" 
+                sh "docker build  -t ${DOCKER_IMAGE_NAME} ." 
             }
         }
 
