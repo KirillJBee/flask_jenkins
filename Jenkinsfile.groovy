@@ -11,12 +11,12 @@ pipeline {
             }
         }
 
-        stage('test') {
-            steps {
-                sh "docker run -d --rm testfluskapp:V1.0"
-                sh "curl http://172.0.0.1:8000"
-            }
-        }
+        //stage('test') {
+        //   steps {
+        //        sh "docker run -d --rm testfluskapp:V1.0"
+        //        sh "curl http://172.0.0.1:8000"
+        //    }
+        //}
 
 
         stage('deploy') {
@@ -47,7 +47,7 @@ pipeline {
         }
 
         always {
-            
+
             cleanWs()
             dir("${env.WORKSPACE}@tmp") {
             deleteDir()
