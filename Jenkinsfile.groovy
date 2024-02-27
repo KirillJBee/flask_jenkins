@@ -11,7 +11,6 @@ pipeline {
 
         stage('build docker image') {
             agent { label 'awsssh'}   
-            checkout scm
             
             steps {
                 sh 'docker build -t kirilljbee/testfluskapp:latest .'    
