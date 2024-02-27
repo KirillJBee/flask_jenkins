@@ -1,16 +1,19 @@
 pipeline {
     agent none
     
-    
+    stages {
         stage('build docker image') {
             agent {
                 label 'awsssh'
             }
 
             steps {
-                sh "docker build -t testfluskapp:V1.0 ." 
+                sh "docker build -t testfluskapp:V2.0 ." 
             }
         }
+    }
+
+
 
 
     post { 
