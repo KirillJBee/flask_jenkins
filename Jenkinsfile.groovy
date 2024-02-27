@@ -9,17 +9,17 @@ pipeline {
     
     stages {
 
-        agent {
-                label 'awsssh'
-            }
+        stage('build docker image') {
+            agent { label 'awsssh'}   
 
-        stage('build docker image') {         
             steps {
                 sh 'docker build -t kirilljbee/testfluskapp:latest .'    
             }
         }
 
         stage('push docker image') {
+            agent { label 'awsssh'} 
+            
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh 'docker push kirilljbee/testfluskapp:latest'
