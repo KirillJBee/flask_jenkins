@@ -36,8 +36,7 @@ pipeline {
 
         failure {
             mail to: 'jbeework@gmail.com', subject: 'The Pipeline failed :('
-                     
-                     
+                            
         }
 
         aborted {
