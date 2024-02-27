@@ -1,4 +1,11 @@
 pipeline {
+
+    environment {
+    registry = "kirilljbee/testfluskapp"
+    registryCredential = '8d132021-9d73-4fca-827a-a31dd9dd34f0'
+    dockerImage = ''
+    }
+
     agent none
     
     stages {
@@ -7,9 +14,8 @@ pipeline {
                 label 'awsssh'
             }
 
-            steps {
-                checkout scm
-                sh "docker build -t testfluskapp:V2.0 ." 
+            script {
+                dockerImage = docker.build registry + ":$BUILD_NUMBER"
             }
         }
 
@@ -22,6 +28,18 @@ pipeline {
                 sh "docker build -t testfluskapp:V2.0 ." 
             }
         }
+         stage('build deploy') {
+            agent {
+                label 'PQHssh'
+            }
+
+            steps {
+                checkout scm
+                
+                sh "docker build -t testfluskapp:V1.0 ." 
+            }
+        }    
+    
     }
 
 
