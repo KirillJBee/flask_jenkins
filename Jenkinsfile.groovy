@@ -25,7 +25,16 @@ pipeline {
                 sh 'docker push kirilljbee/testfluskapp:latest'
             }
         }  
-    
+        
+        stage('deploy docker image') {
+            agent { label 'PQHssh'} 
+
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'docker pull kirilljbee/testfluskapp:latest'
+            }
+        } 
+
     }
 
 
