@@ -19,7 +19,7 @@ pipeline {
 
         stage('push docker image') {
             agent { label 'awsssh'} 
-            
+
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh 'docker push kirilljbee/testfluskapp:latest'
@@ -40,7 +40,7 @@ pipeline {
         }
 
         failure {
-            mail to: 'jbeework@gmail.com', subject: 'The Pipeline failed :(', body: ''
+            mail to: 'jbeework@gmail.com', subject: 'The Pipeline failed :(', body: 'r33r3r3r3r'
                             
         }
 
