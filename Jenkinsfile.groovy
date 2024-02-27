@@ -11,6 +11,16 @@ pipeline {
                 sh "docker build -t testfluskapp:V2.0 ." 
             }
         }
+
+        stage('push docker image') {
+            agent {
+                label 'awsssh'
+            }
+
+            steps {
+                sh "docker build -t testfluskapp:V2.0 ." 
+            }
+        }
     }
 
 
@@ -25,9 +35,9 @@ pipeline {
         }
 
         failure {
-            mail body: 'Сборка прошла неуспешно. Обратите внимание!',
-                     subject: 'Неуспешная сборка',
-                     to: 'jbeework@gmail.com'
+            mail to: 'jbeework@gmail.com', subject: 'The Pipeline failed :('
+                     
+                     
         }
 
         aborted {
