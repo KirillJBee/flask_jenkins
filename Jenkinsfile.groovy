@@ -1,25 +1,16 @@
 pipeline {
-
-    environment {
-        DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
-    
-    }
-
-    agent none
+    agent { label 'PQHssh'}
     
     stages {
 
         stage('build docker image') {
-            agent { label 'PQHssh'}   
-            checkout scm
-            
+
             steps {
                 sh 'docker build -t kirilljbee/testfluskapp:latest .'    
             }
         }
 
         stage('push docker image') {
-            agent { label 'PQHssh'} 
 
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
@@ -27,24 +18,6 @@ pipeline {
             }
         }  
         
-        stage('deploy docker image') {
-            agent { label 'awsssh'} 
-
-            steps {
-                sh 'docker run -d -p 8000:8000 kirilljbee/testfluskapp:latest'
-
-            }
-        } 
-
-        stage('test deploy image') {
-            agent { label 'awsssh'} 
-            
-            steps {
-                sh 'docker pull kirilljbee/testfluskapp:latest'
-
-            }
-        }
-
     }
 
 
