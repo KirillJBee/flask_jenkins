@@ -11,7 +11,8 @@ pipeline {
 
         stage('build docker image') {
             agent { label 'PQHssh'}   
-
+            checkout scm
+            
             steps {
                 sh 'docker build -t kirilljbee/testfluskapp:latest .'    
             }
@@ -37,7 +38,7 @@ pipeline {
 
         stage('test deploy image') {
             agent { label 'awsssh'} 
-
+            
             steps {
                 sh 'docker pull kirilljbee/testfluskapp:latest'
 
