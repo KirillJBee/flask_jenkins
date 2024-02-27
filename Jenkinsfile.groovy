@@ -68,7 +68,7 @@ pipeline {
 
         always {
 
-            sh 'docker logout'
+            //sh 'docker logout'
 
             cleanWs()
             dir("${env.WORKSPACE}@tmp") {
