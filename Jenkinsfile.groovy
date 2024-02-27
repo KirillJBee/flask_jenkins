@@ -30,10 +30,20 @@ pipeline {
             agent { label 'PQHssh'} 
 
             steps {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                //sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh 'docker pull kirilljbee/testfluskapp:latest'
+
             }
         } 
+
+        stage('test deploy image') {
+            agent { label 'PQHssh'} 
+
+            steps {
+                sh 'docker pull kirilljbee/testfluskapp:latest'
+
+            }
+        }
 
     }
 
@@ -47,7 +57,7 @@ pipeline {
         }
 
         failure {
-            mail to: 'jbeework@gmail.com', subject: 'The Pipeline failed :(', body: 'r33r3r3r3r'
+            mail to: 'jbeework@gmail.com', subject: 'The Pipeline failed :(', body: 'empty'
                             
         }
 
