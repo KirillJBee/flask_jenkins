@@ -30,8 +30,7 @@ pipeline {
             agent { label 'PQHssh'} 
 
             steps {
-                //sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker pull kirilljbee/testfluskapp:latest'
+                sh 'docker run -d -p 8000:8000 kirilljbee/testfluskapp:latest'
 
             }
         } 
