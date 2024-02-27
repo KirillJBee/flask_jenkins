@@ -25,9 +25,6 @@ pipeline {
                 label 'awsssh'
             }
 
-            steps {
-                sh "docker build -t testfluskapp:V2.0 ." 
-            }
         }
          stage('build deploy') {
             agent {
@@ -84,4 +81,4 @@ pipeline {
 
 
 }
-
+}
