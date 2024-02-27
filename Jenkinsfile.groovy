@@ -8,6 +8,7 @@ pipeline {
             }
 
             steps {
+                checkout scm
                 sh "docker build -t testfluskapp:V2.0 ." 
             }
         }
