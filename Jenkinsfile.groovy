@@ -10,7 +10,7 @@ pipeline {
     stages {
 
         stage('build docker image') {
-            agent { label 'awsssh'}   
+            agent { label 'PQHssh'}   
 
             steps {
                 sh 'docker build -t kirilljbee/testfluskapp:latest .'    
@@ -18,7 +18,7 @@ pipeline {
         }
 
         stage('push docker image') {
-            agent { label 'awsssh'} 
+            agent { label 'PQHssh'} 
 
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
@@ -27,7 +27,7 @@ pipeline {
         }  
         
         stage('deploy docker image') {
-            agent { label 'PQHssh'} 
+            agent { label 'awsssh'} 
 
             steps {
                 sh 'docker run -d -p 8000:8000 kirilljbee/testfluskapp:latest'
@@ -36,7 +36,7 @@ pipeline {
         } 
 
         stage('test deploy image') {
-            agent { label 'PQHssh'} 
+            agent { label 'awsssh'} 
 
             steps {
                 sh 'docker pull kirilljbee/testfluskapp:latest'
