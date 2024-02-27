@@ -35,7 +35,7 @@ pipeline {
         }
 
         failure {
-            mail to: 'jbeework@gmail.com', subject: 'The Pipeline failed :('
+            mail to: 'jbeework@gmail.com', subject: 'The Pipeline failed :(', body: ''
                             
         }
 
