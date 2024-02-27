@@ -50,6 +50,12 @@ pipeline {
 
     post { 
 
+        always {
+            
+            cleanWs(deleteDirs: true, disableDeferredWipeout: true)
+       
+        }
+
         success {
             mail body: 'Сборка прошла успешно. Наши поздравления!',
                      subject: 'Успешная сборка',
@@ -67,11 +73,7 @@ pipeline {
                      to: 'jbeework@gmail.com'
         }
 
-        always {
-            
-            cleanWs(deleteDirs: true, disableDeferredWipeout: true)
        
-        }
 
     }
 
