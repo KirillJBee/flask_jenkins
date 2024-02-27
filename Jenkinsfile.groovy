@@ -1,42 +1,30 @@
 pipeline {
 
     environment {
-    registry = "kirilljbee/testfluskapp"
-    registryCredential = '8d132021-9d73-4fca-827a-a31dd9dd34f0'
-    dockerImage = ''
+        DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
+    
     }
 
     agent none
     
     stages {
-        stage('build docker image') {
-            agent {
+
+        agent {
                 label 'awsssh'
             }
 
+        stage('build docker image') {         
             steps {
-                script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                sh 'docker build -t kirilljbee/testfluskapp:latest .'    
             }
         }
 
         stage('push docker image') {
-            agent {
-                label 'awsssh'
-            }
-
-        }
-         stage('build deploy') {
-            agent {
-                label 'PQHssh'
-            }
-
             steps {
-                checkout scm
-                
-                sh "docker build -t testfluskapp:V1.0 ." 
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'docker push kirilljbee/testfluskapp:latest'
             }
-        }    
+        }  
     
     }
 
@@ -81,4 +69,4 @@ pipeline {
 
 
 }
-}
+
