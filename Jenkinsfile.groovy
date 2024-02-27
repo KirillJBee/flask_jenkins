@@ -29,8 +29,6 @@ pipeline {
     }
 
 
-
-
     post { 
 
         success {
@@ -65,6 +63,10 @@ pipeline {
                 deleteDir()
             }
         }
+
+        always {
+            sh 'docker logout'
+        } 
     }
 
 
