@@ -1,25 +1,17 @@
 pipeline {
-
-    agent {
-        label 'awsssh'
-    }
-
+    agent none
+    
     stages {
         stage('build docker image') {
+            agent {
+                label 'awsssh'
+            }
+            
             steps {
                 sh "docker build -t testfluskapp:V1.0 ." 
             }
         }
 
-        //stage('test') {
-        //   steps {
-        //        sh "docker run -d --rm testfluskapp:V1.0"
-        //        sh "curl http://172.0.0.1:8000"
-        //    }
-        //}
-
-
-        
     }
 
     post { 
