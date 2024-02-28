@@ -1,16 +1,16 @@
 pipeline {
-
+    agent none
     environment {
         DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
     
     }
-    
-    agent none
 
     stages {
 
         stage('build docker image') {
-            agent { label 'awsssh'}   
+            agent { 
+                label 'awsssh'
+            }   
             
             steps {
                 sh 'docker build -t kirilljbee/testfluskapp:latest .'    
@@ -23,6 +23,7 @@ pipeline {
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh 'docker push kirilljbee/testfluskapp:latest'
+                sh 'docker stop $(docker ps -a -q)'
                 sh 'docker system prune -af'
             }
         }  
