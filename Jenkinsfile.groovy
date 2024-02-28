@@ -28,7 +28,7 @@ pipeline {
             }
         }  
         
-        stage('test deploy docker image') {
+        stage('run test deploy docker image') {
             agent { label 'PQHssh'} 
 
             steps {
@@ -51,7 +51,7 @@ pipeline {
                     while (retryCount < maxRetries && exitcode != 0) {
                         retryCount++
                         echo "Attempt ${retryCount} to execute curl..."
-                        exitCode = sh(returnStatus: true, script: 'timeout 10s curl://localhost:8000')                   
+                        exitCode = sh(returnStatus: true, script: 'timeout 20s curl curl http://localhost:8000/')                   
                     }
 
                     if (exitCode != 0) {
