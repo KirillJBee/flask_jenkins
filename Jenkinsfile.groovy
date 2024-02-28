@@ -51,7 +51,7 @@ pipeline {
                     while (retryCount < maxRetries && exitcode != 0) {
                         retryCount++
                         echo "Attempt ${retryCount} to execute curl..."
-                        exitCode = sh(returnStatus: true, script: 'curl http://localhost:8000/')                   
+                        exitCode = sh(returnStatus: true, script: 'timeout 20s curl http://localhost:8000/')                   
                     }
 
                     if (exitCode != 0) {
