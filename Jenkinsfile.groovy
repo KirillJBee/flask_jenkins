@@ -4,8 +4,6 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
     
     }
-
-    agent none
     
     stages {
 
