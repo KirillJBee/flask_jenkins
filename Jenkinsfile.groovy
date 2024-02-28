@@ -43,14 +43,15 @@ pipeline {
             agent { label 'PQHssh'} 
 
             steps {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker pull kirilljbee/testfluskapp:latest'
-                sh 'docker run -d --rm -p 8000:8000 kirilljbee/testfluskapp:latest'
-                sh 'curl http://localhost:8000'
-                docker.image('kirilljbee/testfluskapp:latest').tag('prodversion')
-                docker.image('kirilljbee/testfluskapp:latest').push('prodversion')
-                sh 'docker stop $(docker ps -a -q)'
-                sh 'docker system prune -af'
+                script {
+                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                    sh 'docker pull kirilljbee/testfluskapp:latest'
+                    sh 'docker run -d --rm -p 8000:8000 kirilljbee/testfluskapp:latest'
+                    sh 'curl http://localhost:8000'
+                    docker.image('kirilljbee/testfluskapp:latest').tag('prodversion')
+                    docker.image('kirilljbee/testfluskapp:latest').push('prodversion')
+                    sh 'docker stop $(docker ps -a -q)'
+                    sh 'docker system prune -af'
             }
         } 
 
