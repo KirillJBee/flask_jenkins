@@ -47,6 +47,9 @@ pipeline {
 
         // Clean after build
        
+        always { 
+            cleanWs()
+        }
 
         success {
             mail body: 'Сборка прошла успешно. Наши поздравления!',
