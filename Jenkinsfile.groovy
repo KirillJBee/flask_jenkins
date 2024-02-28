@@ -23,10 +23,11 @@ pipeline {
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh 'docker push kirilljbee/testfluskapp:latest'
+                sh 'docker system prune -af'
             }
         }  
         
-        stage('deploy docker image') {
+        stage('test deploy docker image') {
             agent { label 'PQHssh'} 
 
             steps {
