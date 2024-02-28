@@ -1,8 +1,8 @@
 pipeline {
     agent none
+
     environment {
         DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
-    
     }
 
     stages {
@@ -42,7 +42,22 @@ pipeline {
             agent { label 'PQHssh'} 
 
             steps {
-                sh 'curl http://localhost:8000/'
+                script {
+                    // Perform tests
+                    def maxRetries = 3
+                    def retryCount = 0
+                    def exitCode = -1
+
+                    while (retryCount < maxRetries && exitcode != 0) {
+                        retryCount++
+                        echo "Attempt ${retryCount} to execute curl..."
+                        exitCode = sh(returnStatus: true, script: 'timeout 1-s curl://localhost:8000')                   
+                    }
+
+                    if (exitCode != 0) {
+                        error "failed to execute after ${maxRetries} attempts."
+                    }
+                }
             }
         }
 
