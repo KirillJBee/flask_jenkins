@@ -52,18 +52,13 @@ pipeline {
                     docker.image('kirilljbee/testfluskapp:latest').push('prodversion')
                     sh 'docker stop $(docker ps -a -q)'
                     sh 'docker system prune -af'
-            }
-        } 
-
-        
-
+                }
+            } 
+        }   
     }
 
 
     post { 
-
-
-
 
         success {
             mail body: 'Сборка прошла успешно. Наши поздравления!',
