@@ -36,6 +36,14 @@ pipeline {
             }
         } 
 
+        stage('test docker image') {
+            agent { label 'PQHssh'} 
+
+            steps {
+                sh 'sh 'python test.py''
+           
+            }
+        }
 
     }
 
