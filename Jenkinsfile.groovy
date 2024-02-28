@@ -48,7 +48,7 @@ pipeline {
                     sh 'docker pull kirilljbee/testfluskapp:test'
                     sh 'docker run -d --rm -p 8000:8000 kirilljbee/testfluskapp:test'
                     sh 'ping -c 5 localhost'
-                    sh 'curl http://localhost:8000'
+                    sh 'curl http://localhost:8001'
                     docker.image('kirilljbee/testfluskapp:test').tag('prod')
                     docker.image('kirilljbee/testfluskapp:test').push('prod')
                     sh 'docker stop $(docker ps -a -q)'
