@@ -40,8 +40,7 @@ pipeline {
             agent { label 'PQHssh'} 
             
             steps {
-                sh 'docker pull kirilljbee/testfluskapp:latest'
-
+                sh 'docker run -p 8000:8000 kirilljbee/testfluskapp:latest'
             }
         }
 
