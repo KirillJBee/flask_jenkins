@@ -47,7 +47,8 @@ pipeline {
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                     sh 'docker pull kirilljbee/testfluskapp:test'
                     sh 'docker run -d --rm -p 8000:8000 kirilljbee/testfluskapp:test'
-                    sh 'timeout 10s curl http://localhost:8000'
+                    sh 'ping -c 5 localhost'
+                    sh 'curl http://localhost:8000'
                     docker.image('kirilljbee/testfluskapp:test').tag('prod')
                     docker.image('kirilljbee/testfluskapp:test').push('prod')
                     sh 'docker stop $(docker ps -a -q)'
