@@ -40,8 +40,7 @@ pipeline {
             agent { label 'PQHssh'} 
 
             steps {
-                sh 'sh 'python test.py''
-           
+                sh 'python test.py'
             }
         }
 
