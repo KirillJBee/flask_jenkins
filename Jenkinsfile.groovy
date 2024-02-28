@@ -25,6 +25,7 @@ pipeline {
                 sh 'docker push kirilljbee/testfluskapp:latest'
                 //sh 'docker stop $(docker ps -a -q)'
                 sh 'docker system prune -af'
+                cleanWs()
             }
         }  
         
@@ -38,18 +39,12 @@ pipeline {
             }
         } 
 
-       
+        }
 
     }
 
 
     post { 
-
-        // Clean after build
-       
-        always { 
-            cleanWs()
-        }
 
         success {
             mail body: 'Сборка прошла успешно. Наши поздравления!',
