@@ -5,6 +5,8 @@ pipeline {
     
     }
     
+    agent none
+
     stages {
 
         stage('build docker image') {
