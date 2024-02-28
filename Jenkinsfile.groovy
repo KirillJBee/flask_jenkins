@@ -23,7 +23,7 @@ pipeline {
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh 'docker push kirilljbee/testfluskapp:latest'
-                sh 'docker stop $(docker ps -a -q)'
+                //sh 'docker stop $(docker ps -a -q)'
                 sh 'docker system prune -af'
             }
         }  
@@ -51,7 +51,7 @@ pipeline {
                     while (retryCount < maxRetries && exitcode != 0) {
                         retryCount++
                         echo "Attempt ${retryCount} to execute curl..."
-                        exitCode = sh(returnStatus: true, script: 'timeout 1-s curl://localhost:8000')                   
+                        exitCode = sh(returnStatus: true, script: 'timeout 10s curl://localhost:8000')                   
                     }
 
                     if (exitCode != 0) {
