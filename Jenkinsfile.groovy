@@ -49,7 +49,8 @@ pipeline {
                 sh 'curl http://localhost:8000'
                 docker.image('kirilljbee/testfluskapp:latest').tag('prodversion')
                 docker.image('kirilljbee/testfluskapp:latest').push('prodversion')
-
+                sh 'docker stop $(docker ps -a -q)'
+                sh 'docker system prune -af'
             }
         } 
 
