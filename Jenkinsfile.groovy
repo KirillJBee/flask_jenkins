@@ -13,7 +13,7 @@ pipeline {
             }   
             
             steps {
-                sh 'docker build -t kirilljbee/testfluskapp:latest .'    
+                sh 'docker build -t kirilljbee/testfluskapp:test .'    
             }
         }
 
@@ -22,7 +22,7 @@ pipeline {
 
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push kirilljbee/testfluskapp:latest'
+                sh 'docker push kirilljbee/testfluskapp:test'
                 //sh 'docker stop $(docker ps -a -q)'
                 sh 'docker system prune -af'
                 cleanWs()
@@ -45,13 +45,23 @@ pipeline {
             steps {
                 script {
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    sh 'docker pull kirilljbee/testfluskapp:latest'
-                    sh 'docker run -d --rm -p 8000:8000 kirilljbee/testfluskapp:latest'
+                    sh 'docker pull kirilljbee/testfluskapp:test'
+                    sh 'docker run -d --rm -p 8000:8000 kirilljbee/testfluskapp:test'
                     sh 'curl http://localhost:8000'
-                    docker.image('kirilljbee/testfluskapp:latest').tag('prodversion')
-                    docker.image('kirilljbee/testfluskapp:latest').push('prodversion')
+                    docker.image('kirilljbee/testfluskapp:test').tag('prod')
+                    docker.image('kirilljbee/testfluskapp:test').push('prod')
                     sh 'docker stop $(docker ps -a -q)'
                     sh 'docker system prune -af'
+                    cleanWs()
+                    dir("${env.WORKSPACE}@tmp") {
+                        deleteDir()
+                    }
+                     dir("${env.WORKSPACE}@script") {
+                         deleteDir()
+                    }
+                    dir("${env.WORKSPACE}@script@tmp") {
+                        deleteDir()
+                    }
                 }
             } 
         }   
