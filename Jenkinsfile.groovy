@@ -69,10 +69,12 @@ pipeline {
             
             steps {
                 sh 'ansible --version'
+                sh ''
 
             }
         }
-
+    }
+    
         post { 
 
             success {
@@ -94,6 +96,5 @@ pipeline {
                      to: 'jbeework@gmail.com'
             }
         }
-    }
 }
 
