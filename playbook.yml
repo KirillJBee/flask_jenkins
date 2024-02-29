@@ -13,7 +13,7 @@
         source: pull
     - name: Run testfluskapp:latest Docker container
       docker_container:
-        name: kirilljbee/testfluskapp:latest
+        name: testfluskapp
         image: kirilljbee/testfluskapp:latest
         state: started
         ports:
