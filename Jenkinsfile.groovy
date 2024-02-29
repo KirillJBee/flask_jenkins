@@ -68,7 +68,11 @@ pipeline {
         
         stage('deploy production') {
             agent { label 'PQHssh'}
+            input(message: 'Are you sure?', ok: 'Go ahed!')
+            steps{
                 sh 'echo Hello world!'
+            }
+                
         }
     }
 
