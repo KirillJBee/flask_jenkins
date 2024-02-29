@@ -48,8 +48,8 @@ pipeline {
                     sh 'docker run -d --rm -p 8000:8000 kirilljbee/testfluskapp:test'
                     sh 'ping -c 5 localhost'
                     sh 'curl http://localhost:8000'
-                    docker.image('kirilljbee/testfluskapp:test').tag('prod')
-                    docker.image('kirilljbee/testfluskapp:test').push('prod')
+                    docker.image('kirilljbee/testfluskapp:test').tag(${BUILD_NUMBER})
+                    docker.image('kirilljbee/testfluskapp:test').push(${BUILD_NUMBER})
                     sh 'docker stop $(docker ps -a -q)'
                     sh 'docker system prune -af'
                     cleanWs()
