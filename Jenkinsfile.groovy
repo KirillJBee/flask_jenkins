@@ -50,8 +50,8 @@ pipeline {
 
                     sh 'curl http://localhost:8000'
 
-                    docker.image('kirilljbee/testfluskapp:test').tag('prod')
-                    docker.image('kirilljbee/testfluskapp:test').push('prod')
+                    docker.image('kirilljbee/testfluskapp:test').tag(${env.BUILD_ID})
+                    docker.image('kirilljbee/testfluskapp:test').push(${env.BUILD_ID})
 
                     sh 'docker stop $(docker ps -a -q)'
                     sh 'docker system prune -af'
