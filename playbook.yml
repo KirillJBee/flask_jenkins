@@ -1,0 +1,5 @@
+---
+- name: "Install testfluskapp"
+  hosts: [proddeploy]
+  tasks:
+    - 
