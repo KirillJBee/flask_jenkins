@@ -7,7 +7,7 @@ pipeline {
 
     stages {
 
-        stage('build docker image') {
+        stage('build docker image') { 
             agent { 
                 label 'awsssh'
             }   
