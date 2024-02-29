@@ -25,7 +25,16 @@ pipeline {
                 sh 'docker push kirilljbee/testfluskapp:test'
                 //sh 'docker stop $(docker ps -a -q)'
                 sh 'docker system prune -af'
-                
+                cleanWs()
+                    dir("${env.WORKSPACE}@tmp") {
+                        deleteDir()
+                    }
+                     dir("${env.WORKSPACE}@script") {
+                         deleteDir()
+                    }
+                    dir("${env.WORKSPACE}@script@tmp") {
+                        deleteDir()
+                    }
             }
         }  
         
@@ -43,16 +52,7 @@ pipeline {
                     docker.image('kirilljbee/testfluskapp:test').push('prod')
                     sh 'docker stop $(docker ps -a -q)'
                     sh 'docker system prune -af'
-                    
-                }
-            } 
-        }   
-
-        stage('clear agents') {
-            agent { label 'awsssh', 'PQHssh'}
-
-            steps {
-                cleanWs()
+                    cleanWs()
                     dir("${env.WORKSPACE}@tmp") {
                         deleteDir()
                     }
@@ -62,8 +62,10 @@ pipeline {
                     dir("${env.WORKSPACE}@script@tmp") {
                         deleteDir()
                     }
-            }
+                }
+            } 
         }   
+
     }
 
 
