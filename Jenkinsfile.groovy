@@ -53,7 +53,17 @@ pipeline {
                     docker.image('kirilljbee/testfluskapp:test').push('prod')
                     sh 'docker stop $(docker ps -a -q)'
                     sh 'docker system prune -af'
-                    cleanWs()
+                    
+                }
+            } 
+        }   
+    }
+
+
+    post { 
+
+        always {
+            cleanWs()
                     dir("${env.WORKSPACE}@tmp") {
                         deleteDir()
                     }
@@ -63,13 +73,7 @@ pipeline {
                     dir("${env.WORKSPACE}@script@tmp") {
                         deleteDir()
                     }
-                }
-            } 
-        }   
-    }
-
-
-    post { 
+        }
 
         success {
             mail body: 'Сборка прошла успешно. Наши поздравления!',
