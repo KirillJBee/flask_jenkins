@@ -71,6 +71,7 @@ pipeline {
                 sh 'ansible --version'
                 sh 'ansible all -i hosts.ini -m ping'
             }
+        
         }
     }
 
