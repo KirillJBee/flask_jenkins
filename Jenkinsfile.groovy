@@ -69,12 +69,11 @@ pipeline {
             
             steps {
                 sh 'ansible --version'
-                sh ''
-
+                sh 'ansible all -i hosts.ini -m ping'
             }
         }
     }
-    
+
         post { 
 
             success {
