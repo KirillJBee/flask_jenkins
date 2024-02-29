@@ -38,7 +38,7 @@ pipeline {
             }
         }  
         
-        stage('run test deploy docker image') {
+        stage('run test docker image & push prod ') {
             agent { label 'PQHssh'} 
 
             steps {
@@ -47,11 +47,15 @@ pipeline {
                     sh 'docker pull kirilljbee/testfluskapp:test'
                     sh 'docker run -d --rm -p 8000:8000 kirilljbee/testfluskapp:test'
                     sh 'ping -c 5 localhost'
+                    
                     sh 'curl http://localhost:8000'
+
                     docker.image('kirilljbee/testfluskapp:test').tag(prod)
                     docker.image('kirilljbee/testfluskapp:test').push(prod)
+
                     sh 'docker stop $(docker ps -a -q)'
                     sh 'docker system prune -af'
+
                     cleanWs()
                     dir("${env.WORKSPACE}@tmp") {
                         deleteDir()
