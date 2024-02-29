@@ -5,6 +5,7 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
     }
          
+    stages {
         stage('run test docker image & push prod ') {
             agent { label 'PQHssh'} 
 
