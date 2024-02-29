@@ -69,27 +69,30 @@ pipeline {
             
             steps {
                 sh 'ansible --version'
+
             }
-
-
-    post { 
-        success {
-            mail to: 'jbeework@gmail.com',
-                 subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) is done!",
-                 body: "Please go to ${BUILD_URL} and verify the build"      
         }
 
-        failure {
-            mail to: 'jbeework@gmail.com',
+        post { 
+
+            success {
+                mail to: 'jbeework@gmail.com',
+                subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) is done!",
+                body: "Please go to ${BUILD_URL} and verify the build"      
+            }
+
+            failure {
+                mail to: 'jbeework@gmail.com',
                  subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) is failed!",
                  body: "Please go to ${BUILD_URL} and verify the build" 
                             
-        }
+            }
 
-        aborted {
-            mail body: 'Сборка была прервана! Обратите внимание!',
+            aborted {
+                mail body: 'Сборка была прервана! Обратите внимание!',
                      subject: 'Прерванная сборка',
                      to: 'jbeework@gmail.com'
+            }
         }
     }
 }
