@@ -65,9 +65,12 @@ pipeline {
                 }
             } 
         }   
-
+        
+        stage('deploy production') {
+            agent { label 'PQHssh'}
+                sh 'echo Hello world!'
+        }
     }
-
 
     post { 
         success {
@@ -87,6 +90,5 @@ pipeline {
                      to: 'jbeework@gmail.com'
         }
     }
-
 }
 
