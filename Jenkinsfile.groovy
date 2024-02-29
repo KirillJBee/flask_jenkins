@@ -47,13 +47,12 @@ pipeline {
                 }
             } 
         }   
-    }
 
+        stage('clear agents') {
+            agent { label 'awsssh'}
 
-    post { 
-
-        always {
-            cleanWs()
+            steps {
+                cleanWs()
                     dir("${env.WORKSPACE}@tmp") {
                         deleteDir()
                     }
@@ -63,8 +62,12 @@ pipeline {
                     dir("${env.WORKSPACE}@script@tmp") {
                         deleteDir()
                     }
-        }
+            }
+        }   
+    }
 
+
+    post { 
         success {
             mail body: 'Сборка прошла успешно. Наши поздравления!',
                      subject: 'Успешная сборка',
@@ -81,11 +84,7 @@ pipeline {
                      subject: 'Прерванная сборка',
                      to: 'jbeework@gmail.com'
         }
-
-       
-
     }
-
 
 }
 
