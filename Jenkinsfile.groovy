@@ -13,8 +13,6 @@ pipeline {
             }   
             
             steps {
-                checkout scm
-
                 sh 'docker build -t kirilljbee/testfluskapp:test .'    
             }
         }
