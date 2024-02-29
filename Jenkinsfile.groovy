@@ -49,7 +49,7 @@ pipeline {
         }   
 
         stage('clear agents') {
-            agent { label 'awsssh'}
+            agent { label 'awsssh', 'PQHssh'}
 
             steps {
                 cleanWs()
