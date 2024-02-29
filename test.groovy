@@ -4,40 +4,8 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
     }
-
+         
     stages {
-
-        stage('build docker image') { 
-            agent { 
-                label 'awsssh'
-            }   
-            
-            steps {
-                sh 'docker build -t kirilljbee/testfluskapp:test .'    
-            }
-        }
-
-        stage('push docker image') {
-            agent { label 'awsssh'} 
-
-            steps {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push kirilljbee/testfluskapp:test'
-                //sh 'docker stop $(docker ps -a -q)'
-                sh 'docker system prune -af'
-                cleanWs()
-                    dir("${env.WORKSPACE}@tmp") {
-                        deleteDir()
-                    }
-                     dir("${env.WORKSPACE}@script") {
-                         deleteDir()
-                    }
-                    dir("${env.WORKSPACE}@script@tmp") {
-                        deleteDir()
-                    }
-            }
-        }  
-        
         stage('run test docker image & push prod ') {
             agent { label 'PQHssh'} 
 
@@ -69,8 +37,17 @@ pipeline {
             
             steps {
                 sh 'ansible --version'
-                sh 'ansible all -i hosts.ini -m ping'
-                sh 'ansible-playbook playbook.yml'
+                sh 'ansible-playbook playbook.yml -i hosts.ini'
+                cleanWs()
+                    dir("${env.WORKSPACE}@tmp") {
+                        deleteDir()
+                    }
+                     dir("${env.WORKSPACE}@script") {
+                         deleteDir()
+                    }
+                    dir("${env.WORKSPACE}@script@tmp") {
+                        deleteDir()
+                    }
             }
         
         }
