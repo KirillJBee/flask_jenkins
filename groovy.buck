@@ -70,6 +70,7 @@ pipeline {
             steps {
                 sh 'ansible --version'
                 sh 'ansible all -i hosts.ini -m ping'
+                sh 'ansible-playbook playbook.yml'
             }
         
         }

@@ -41,3 +41,15 @@
                     dir("${env.WORKSPACE}@script@tmp") {
                         deleteDir()
                     }
+
+
+ansiblePlaybook playbook: 'playbook.yml', inventory: 'hosts.ini', credentialsId: 'github_key'
+
+
+- name: Run testfluskapp:latest Docker container
+      docker_container:
+        name: kirilljbee/testfluskapp:latest
+        image: kirilljbee/testfluskapp:latest
+        state: started
+        ports:
+          - "8000:8000"

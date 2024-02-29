@@ -1,5 +1,21 @@
 ---
 - name: "Install testfluskapp"
+  become: yes
   hosts: [proddeploy]
   tasks:
-    - 
+    - name: Log into DockerHub
+      docker_login:
+        username: kirilljbee
+        password: keCD_ACKJf?++(8
+    - name: Pull testfluskapp:latest Docker container
+      docker_image:
+        name: kirilljbee/testfluskapp:latest
+        source: pull
+    - name: Run testfluskapp:latest Docker container
+      docker_container:
+        name: kirilljbee/testfluskapp:latest
+        image: kirilljbee/testfluskapp:latest
+        state: started
+        ports:
+          - "8000:8000"
+    
