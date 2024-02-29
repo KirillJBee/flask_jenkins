@@ -85,12 +85,14 @@ pipeline {
         success {
             mail to: 'jbeework@gmail.com',
                  subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) is great",
-                 body: "Please go to ${BUILD_URL} and verify the build",
-                 
+                 body: "Please go to ${BUILD_URL} and verify the build"      
         }
 
         failure {
-            mail to: 'jbeework@gmail.com', subject: 'The Pipeline failed :(', body: 'empty'
+            mail to: 'jbeework@gmail.com',
+                 subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) is failed",
+                 body: "Please go to ${BUILD_URL} and verify the build" 
+           
                             
         }
 
