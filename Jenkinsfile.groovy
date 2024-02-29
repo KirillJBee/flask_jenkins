@@ -50,22 +50,16 @@ pipeline {
 
                     sh 'curl http://localhost:8000'
 
-                    docker.image('kirilljbee/testfluskapp:test').tag("${BUILD_NUMBER}")
-                    docker.image('kirilljbee/testfluskapp:test').push("${BUILD_NUMBER}")
+                    //docker.image('kirilljbee/testfluskapp:test').tag("${BUILD_NUMBER}")
+                    //docker.image('kirilljbee/testfluskapp:test').push("${BUILD_NUMBER}")
+
+                    docker.image('kirilljbee/testfluskapp:test').tag("latest")
+                    docker.image('kirilljbee/testfluskapp:test').push("latest")
 
                     sh 'docker stop $(docker ps -a -q)'
                     sh 'docker system prune -af'
 
-                    cleanWs()
-                    dir("${env.WORKSPACE}@tmp") {
-                        deleteDir()
-                    }
-                     dir("${env.WORKSPACE}@script") {
-                         deleteDir()
-                    }
-                    dir("${env.WORKSPACE}@script@tmp") {
-                        deleteDir()
-                    }
+                    
                 }
             } 
         }   
@@ -73,26 +67,22 @@ pipeline {
         stage('deploy production') {
             agent { label 'PQHssh'}
             
-            steps{
-                input(message: 'Are you sure?', ok: 'Go ahed!')
-                sh 'echo Hello world!'
+            steps {
+                sh 'ansible --version'
             }
-                
-        }
-    }
+
 
     post { 
         success {
             mail to: 'jbeework@gmail.com',
-                 subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) is great",
+                 subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) is done!",
                  body: "Please go to ${BUILD_URL} and verify the build"      
         }
 
         failure {
             mail to: 'jbeework@gmail.com',
-                 subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) is failed",
+                 subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) is failed!",
                  body: "Please go to ${BUILD_URL} and verify the build" 
-           
                             
         }
 
