@@ -83,9 +83,10 @@ pipeline {
 
     post { 
         success {
-            mail body: 'Сборка прошла успешно. Наши поздравления!',
+            mail to: 'jbeework@gmail.com',
                  subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) is great",
-                 to: 'jbeework@gmail.com'
+                 body: "Please go to ${BUILD_URL} and verify the build",
+                 
         }
 
         failure {
