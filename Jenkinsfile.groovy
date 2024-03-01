@@ -67,11 +67,12 @@ pipeline {
         stage('deploy production') {
             agent { label 'PQHssh'}
             
-            steps {
-                input {
+            input {
                     message "Ready to deploy?"
                     ok "Yes"
-            }
+                }
+            steps {
+                
                 sh 'docker stop testfluskapp'
                 sh 'docker rmi kirilljbee/testfluskapp'
                 sh 'ansible-playbook playbook.yml -i hosts.ini'
