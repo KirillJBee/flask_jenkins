@@ -73,7 +73,6 @@ pipeline {
                     ok "Yes"
                 }
             steps {
-                
                 sh 'ansible-playbook playbook.yml -i hosts.ini'
                 //sh 'ansible all -i hosts.ini -m ping'
                 //sh 'ansible-playbook playbook.yml'
