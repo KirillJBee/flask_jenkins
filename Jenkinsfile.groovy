@@ -73,13 +73,8 @@ pipeline {
                     ok "Yes"
                 }
             steps {
-				ansiblePlaybook inventory: 'hosts.ini',
-					            playbook: 'playbook.yml',
-					            colorized: true, 
-				    				      
-			
-                //sh 'ansible all -i hosts.ini -m ping'
-                //sh 'ansible-playbook playbook.yml'
+				ansiblePlaybook playbook: 'playbook.yml', inventory: 'hosts.ini'
+                
                 cleanWs()
                     dir("${env.WORKSPACE}@tmp") {
                         deleteDir()
