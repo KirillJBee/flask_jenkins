@@ -7,7 +7,7 @@ pipeline {
 
     stages {
 
-        stage('build devdocker image') { 
+        stage('build devimage') { 
             agent { 
                 label 'awsssh'
             }   
@@ -17,7 +17,7 @@ pipeline {
             }
         }
 
-        stage('push devdocker image') {
+        stage('push devimage') {
             agent { label 'awsssh'} 
 
             steps {
@@ -38,7 +38,7 @@ pipeline {
             }
         }  
         
-        stage('test devdocker image & push proddocker image') {
+        stage('test devimage & push prodimage') {
             agent { label 'PQHssh'} 
 
             steps {

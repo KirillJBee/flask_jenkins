@@ -3,10 +3,16 @@
   become: yes
   hosts: [proddeploy]
   tasks:
-    # - name: Stop running testfluskapp_prod container
+    # - name: Stop Running testfluskapp_prod container
     #   docker_container:
     #     name: testfluskapp_prod
     #     state: stopped
+    # - name: Remove Stoped testfluskapp_prod container
+    #   shell: |
+    #      docker rm testfluskapp_prod;
+    # - name: Remove testfluskapp_prod Image 
+    #   shell: |
+    #      docker rmi kirilljbee/testfluskapp:prod;
     - name: Log into DockerHub
       docker_login:
         username: kirilljbee
