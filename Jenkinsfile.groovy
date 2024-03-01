@@ -73,7 +73,7 @@ pipeline {
                     ok "Yes"
                 }
             steps {
-				ansiblePlaybook inventory: 'host.ini',
+				ansiblePlaybook inventory: 'hosts.ini',
 					            playbook: 'playbook.yml',
 					            colorized: true, 
 				    				      
