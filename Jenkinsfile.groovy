@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
+        
     }
 
     stages {
