@@ -7,13 +7,13 @@ pipeline {
 
     stages {
 
-        stage('build docker image') { 
+        stage('build devdocker image') { 
             agent { 
                 label 'awsssh'
             }   
             
             steps {
-                sh 'docker build -t kirilljbee/testfluskapp:test .'    
+                sh 'docker build -t kirilljbee/testfluskapp:dev .'    
             }
         }
 
@@ -22,7 +22,7 @@ pipeline {
 
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push kirilljbee/testfluskapp:test'
+                sh 'docker push kirilljbee/testfluskapp:dev'
                 //sh 'docker stop $(docker ps -a -q)'
                 sh 'docker system prune -af'
                 cleanWs()
@@ -38,14 +38,14 @@ pipeline {
             }
         }  
         
-        stage('run test docker image & push prod docker image') {
+        stage('test devdocker image & push proddocker image') {
             agent { label 'PQHssh'} 
 
             steps {
                 script {
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    sh 'docker pull kirilljbee/testfluskapp:test'
-                    sh 'docker run -d --rm -p 8000:8000 kirilljbee/testfluskapp:test'
+                    sh 'docker pull kirilljbee/testfluskapp:dev'
+                    sh 'docker run -d --rm -p 8000:8000 kirilljbee/testfluskapp:dev'
                     sh 'ping -c 5 localhost'
 
                     sh 'curl http://localhost:8000'
@@ -53,8 +53,8 @@ pipeline {
                     //docker.image('kirilljbee/testfluskapp:test').tag("${BUILD_NUMBER}")
                     //docker.image('kirilljbee/testfluskapp:test').push("${BUILD_NUMBER}")
 
-                    docker.image('kirilljbee/testfluskapp:test').tag("latest")
-                    docker.image('kirilljbee/testfluskapp:test').push("latest")
+                    docker.image('kirilljbee/testfluskapp:dev').tag("prod")
+                    docker.image('kirilljbee/testfluskapp:dev').push("prod")
 
                     sh 'docker stop $(docker ps -a -q)'
                     sh 'docker system prune -af'
@@ -68,7 +68,12 @@ pipeline {
             agent { label 'PQHssh'}
             
             steps {
-                sh 'ansible --version'
+                input {
+                    message "Ready to deploy?"
+                    ok "Yes"
+            }
+                sh 'docker stop testfluskapp'
+                sh 'docker rmi kirilljbee/testfluskapp'
                 sh 'ansible-playbook playbook.yml -i hosts.ini'
                 //sh 'ansible all -i hosts.ini -m ping'
                 //sh 'ansible-playbook playbook.yml'

@@ -9,12 +9,12 @@
         password: keCD_ACKJf?++(8
     - name: Pull testfluskapp:latest Docker container
       docker_image:
-        name: kirilljbee/testfluskapp:latest
+        name: kirilljbee/testfluskapp:prod
         source: pull
     - name: Run testfluskapp:latest Docker container
       docker_container:
-        name: testfluskapp
-        image: kirilljbee/testfluskapp:latest
+        name: testfluskapp_prod
+        image: kirilljbee/testfluskapp:prod
         state: started
         ports:
           - "8000:8000"
