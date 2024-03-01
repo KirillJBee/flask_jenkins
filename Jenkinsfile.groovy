@@ -17,7 +17,7 @@ pipeline {
             }
         }
 
-        stage('push docker image') {
+        stage('push devdocker image') {
             agent { label 'awsssh'} 
 
             steps {
@@ -72,9 +72,6 @@ pipeline {
                     ok "Yes"
                 }
             steps {
-                
-                sh 'docker stop testfluskapp'
-                sh 'docker rmi kirilljbee/testfluskapp'
                 sh 'ansible-playbook playbook.yml -i hosts.ini'
                 //sh 'ansible all -i hosts.ini -m ping'
                 //sh 'ansible-playbook playbook.yml'
