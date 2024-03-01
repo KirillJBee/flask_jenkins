@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
-        
+
     }
 
     stages {
@@ -73,7 +73,11 @@ pipeline {
                     ok "Yes"
                 }
             steps {
-                sh 'ansible-playbook playbook.yml -i hosts.ini'
+				ansiblePlaybook inventory: 'host.ini',
+					            playbook: 'playbook.yml',
+					            colorized: true, 
+				    				      
+			
                 //sh 'ansible all -i hosts.ini -m ping'
                 //sh 'ansible-playbook playbook.yml'
                 cleanWs()
