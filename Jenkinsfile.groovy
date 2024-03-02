@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
-
     }
 
     stages {
@@ -28,13 +27,13 @@ pipeline {
                 sh 'docker system prune -af'
                 cleanWs()
                     dir("${env.WORKSPACE}@tmp") {
-                        deleteDir()
+                        //deleteDir()
                     }
                      dir("${env.WORKSPACE}@script") {
-                         deleteDir()
+                         //deleteDir()
                     }
                     dir("${env.WORKSPACE}@script@tmp") {
-                        deleteDir()
+                        //deleteDir()
                     }
             }
         }  
@@ -57,10 +56,10 @@ pipeline {
                     docker.image('kirilljbee/testfluskapp:dev').tag("prod")
                     docker.image('kirilljbee/testfluskapp:dev').push("prod")
 
-                    sh 'docker stop $(docker ps -a -q)'
+                    sh 'docker stop $(docker ps -aq)'
+                    //!!!!!!
                     sh 'docker system prune -af'
 
-                    
                 }
             } 
         }   
@@ -87,7 +86,6 @@ pipeline {
                         deleteDir()
                     }
             }
-        
         }
     }
 
