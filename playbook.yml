@@ -1,26 +1,36 @@
 ---
 - name: "Install testfluskapp"
   become: yes
-  hosts: [proddeploy]
+  hosts: [jenkins]
+  vars:
+    DOCKER_USERNAME: !vault |
+        $ANSIBLE_VAULT;1.1;AES256
+        38326534626434383362346263383064333633656366356330383332663630623761303735326230
+        6430663630316332316432393961616366343163313761660a323233653631363139656239366333
+        36346237343463363161663063303435336137303465626433656434353030613462663262323233
+        3930386539623031380a326237613231613330383230306165313634376535353566323634383037
+        6138
+    DOCKERHUB_PASSWORD: !vault |
+        $ANSIBLE_VAULT;1.1;AES256
+        39653331373732626131396361636365326438343230306164643764373132383864323866333563
+        3133313864326436666537343761316235353562353136640a363933636435323131396639666233
+        62343163646133323538383039353261323963366532326265633465323164396164313863336236
+        3461393233633830630a323832653964323566313638333131636538613233306435323734366631
+        3038
+    #123123123
   tasks:
     - name: Stop Running testfluskapp_prod container
       docker_container:
         name: testfluskapp_prod
-        state: stopped
-    - name: Remove Stoped testfluskapp_prod container
-      shell: |
-         docker rm testfluskapp_prod;
+        state: absent
     - name: Remove testfluskapp_prod Image 
-      shell: |
-         docker rmi kirilljbee/testfluskapp:prod;
-    - name: Log into DockerHub
-      docker_login:
-        username: kirilljbee
-        password: keCD_ACKJf?++(8
-    - name: Pull testfluskapp:latest Docker container
       docker_image:
         name: kirilljbee/testfluskapp:prod
-        source: pull
+        state: absent
+    - name: Log into DockerHub
+      docker_login:
+        username: "{{ DOCKER_USERNAME }}"
+        password: "{{ DOCKERHUB_PASSWORD }}"
     - name: Run testfluskapp:latest Docker container
       docker_container:
         name: testfluskapp_prod

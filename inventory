@@ -1,0 +1,14 @@
+all:
+  children:
+    mysql:
+      hosts:
+        instance-group-1-35wb:
+          test_var: 123
+    jenkins:
+      hosts:
+        jenkins_host
+    # mysql:
+    #   hosts:
+    #     instance-group-1-35wb:
+    #       ansible_host: ***
+        
