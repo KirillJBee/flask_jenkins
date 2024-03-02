@@ -27,13 +27,13 @@ pipeline {
                 sh 'docker system prune -af'
                 cleanWs()
                     dir("${env.WORKSPACE}@tmp") {
-                        //deleteDir()
+                        deleteDir()
                     }
                      dir("${env.WORKSPACE}@script") {
-                         //deleteDir()
+                        deleteDir()
                     }
                     dir("${env.WORKSPACE}@script@tmp") {
-                        //deleteDir()
+                        deleteDir()
                     }
             }
         }  

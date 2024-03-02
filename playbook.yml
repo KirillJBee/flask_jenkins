@@ -6,10 +6,7 @@
     - name: Stop Running testfluskapp_prod container
       docker_container:
         name: testfluskapp_prod
-        state: stopped
-    - name: Remove Stoped testfluskapp_prod container
-      shell: |
-         docker rm testfluskapp_prod;
+        state: absent
     - name: Remove testfluskapp_prod Image 
       shell: |
          docker rmi kirilljbee/testfluskapp:prod;
@@ -17,11 +14,11 @@
       docker_login:
         username: kirilljbee
         password: keCD_ACKJf?++(8
-    - name: Pull testfluskapp:latest Docker container
-      docker_image:
-        name: kirilljbee/testfluskapp:prod
-        source: pull
-    - name: Run testfluskapp:latest Docker container
+    # - name: Pull testfluskapp:latest Docker container
+    #   docker_image:
+    #     name: kirilljbee/testfluskapp:prod
+    #     source: pull
+    - name: Pull and Run testfluskapp:latest Docker container
       docker_container:
         name: testfluskapp_prod
         image: kirilljbee/testfluskapp:prod
