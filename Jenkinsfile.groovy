@@ -3,6 +3,8 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
+        NAME_IMAGE_DEV = kirilljbee/testfluskapp:dev
+        
     }
 
     stages {
@@ -13,7 +15,7 @@ pipeline {
             }   
             
             steps {
-                sh 'docker build -t kirilljbee/testfluskapp:dev .'    
+                sh 'docker build -t $NAME_IMAGE_DEV .'    
             }
         }
 
