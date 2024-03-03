@@ -38,7 +38,7 @@ pipeline {
                         deleteDir()
                     }
             }
-        // }  
+        }  
         
         // stage('test devimage & push prodimage') {
         //     agent { label 'PQHssh'} 
