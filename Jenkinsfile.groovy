@@ -4,6 +4,7 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
         NAME_IMAGE_DEV = 'kirilljbee/testfluskapp:dev'
+        NAME_CONTAINER_CONT = 'testfluskapp_dev'
         TAG_IMAGE_PROD = 'prod'
 
     }
@@ -42,7 +43,7 @@ pipeline {
                 script {
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                     sh 'docker pull ${NAME_IMAGE_DEV}'
-                    sh 'docker run -d --rm -p 8000:8000 ${NAME_IMAGE_DEV}'
+                    sh 'docker run -d --rm -p 8000:8000 --name ${NAME_CONTAINER_CONT} ${NAME_IMAGE_DEV}'
                     sh 'ping -c 5 localhost'
 
                     sh 'curl http://localhost:8000'
@@ -50,7 +51,8 @@ pipeline {
                     docker.image('kirilljbee/testfluskapp:dev').tag("${TAG_IMAGE_PROD}")
                     docker.image('kirilljbee/testfluskapp:dev').push("${TAG_IMAGE_PROD}")
 
-                    //sh 'docker stop ${NAME_IMAGE_DEV)'
+                    //sh 'docker stop ${NAME_CONTAINER_CONT)'
+
     
                     //sh 'docker rmi ${NAME_IMAGE_DEV)'
                 }
