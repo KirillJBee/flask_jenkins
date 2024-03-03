@@ -32,23 +32,23 @@ pipeline {
                      to: 'jbeework@gmail.com'
         }
 
-        always {
+        // always {
 
-            //sh 'docker logout'
+        //     sh 'docker logout'
 
-            // cleanWs()
-            // dir("${env.WORKSPACE}@tmp") {
-            // deleteDir()
-            // }
+        //     cleanWs()
+        //     dir("${env.WORKSPACE}@tmp") {
+        //     deleteDir()
+        //     }
 
-            // dir("${env.WORKSPACE}@script") {
-            //     deleteDir()
-            // }  
+        //     dir("${env.WORKSPACE}@script") {
+        //         deleteDir()
+        //     }  
 
-            // dir("${env.WORKSPACE}@script@tmp") {
-            //     deleteDir()
-            // }
-        }
+        //     dir("${env.WORKSPACE}@script@tmp") {
+        //         deleteDir()
+        //     }
+        // }
 
     }
 
