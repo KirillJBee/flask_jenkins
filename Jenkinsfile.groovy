@@ -43,7 +43,7 @@ pipeline {
                 script {
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                     sh 'docker pull ${NAME_IMAGE_DEV}'
-                    sh 'docker run -d --rm -p 8000:8000 --name ${NAME_CONTAINER_CONT} ${NAME_IMAGE_DEV}'
+                    sh 'docker run -d --rm --name ${NAME_CONTAINER_CONT} -p 8000:8000  ${NAME_IMAGE_DEV}'
                     sh 'ping -c 5 localhost'
 
                     sh 'curl http://localhost:8000'
