@@ -28,7 +28,7 @@ pipeline {
                 sh 'docker push ${NAME_IMAGE_DEV}'
                 sh 'docker rmi ${NAME_IMAGE_DEV}'
                 cleanWs()
-                    dir("${env.WORKSPACE}${JOB_NAME}@tmp") {
+                    dir("${env.WORKSPACE}$@tmp") {
                         deleteDir()
                     }
             }
