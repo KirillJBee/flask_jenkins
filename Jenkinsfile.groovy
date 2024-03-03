@@ -47,8 +47,8 @@ pipeline {
 
                     sh 'curl http://localhost:8000'
 
-                    docker.image('kirilljbee/testfluskapp:dev').tag("${BUILD_ID}")
-                    docker.image('kirilljbee/testfluskapp:dev').push("${BUILD_ID}")
+                    docker.image('kirilljbee/testfluskapp:dev').tag("${TAG_IMAGE_PROD}")
+                    docker.image('kirilljbee/testfluskapp:dev').push("${TAG_IMAGE_PROD}")
 
                     sh 'docker stop ${NAME_IMAGE_DEV)'
     
@@ -64,21 +64,22 @@ pipeline {
                     message "Ready to deploy?"
                     ok "Yes"
                 }
-            steps {
-                sh 'ansible-playbook playbook.yml -i hosts.ini'
-                //sh 'ansible all -i hosts.ini -m ping'
-                //sh 'ansible-playbook playbook.yml'
-                cleanWs()
-                    dir("${env.WORKSPACE}@tmp") {
-                        deleteDir()
-                    }
-                     dir("${env.WORKSPACE}@script") {
-                         deleteDir()
-                    }
-                    dir("${env.WORKSPACE}@script@tmp") {
-                        deleteDir()
-                    }
-            }
+
+            // steps {
+            //     sh 'ansible-playbook playbook.yml -i hosts.ini'
+            //     //sh 'ansible all -i hosts.ini -m ping'
+            //     //sh 'ansible-playbook playbook.yml'
+            //     cleanWs()
+            //         dir("${env.WORKSPACE}@tmp") {
+            //             deleteDir()
+            //         }
+            //          dir("${env.WORKSPACE}@script") {
+            //              deleteDir()
+            //         }
+            //         dir("${env.WORKSPACE}@script@tmp") {
+            //             deleteDir()
+            //         }
+            // }
         }
     }
 
