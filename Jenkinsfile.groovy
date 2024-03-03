@@ -27,6 +27,7 @@ pipeline {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh 'docker push ${NAME_IMAGE_DEV}'
                 sh 'docker rmi ${NAME_IMAGE_DEV}'
+                //Удаляем рабочие директории проекта
                 cleanWs()
                     dir("${env.WORKSPACE}$@tmp") {
                         deleteDir()
@@ -34,55 +35,51 @@ pipeline {
             }
         }  
         
-        // stage('test devimage & push prodimage') {
-        //     agent { label 'PQHssh'} 
+        stage('test devimage & push prodimage') {
+            agent { label 'PQHssh'} 
 
-        //     steps {
-        //         script {
-        //             sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-        //             sh 'docker pull kirilljbee/testfluskapp:dev'
-        //             sh 'docker run -d --rm -p 8000:8000 kirilljbee/testfluskapp:dev'
-        //             sh 'ping -c 5 localhost'
+            steps {
+                script {
+                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                    sh 'docker pull ${NAME_IMAGE_DEV}'
+                    sh 'docker run -d --rm -p 8000:8000 ${NAME_IMAGE_DEV}'
+                    sh 'ping -c 5 localhost'
 
-        //             sh 'curl http://localhost:8000'
+                    sh 'curl http://localhost:8000'
 
-        //             //docker.image('kirilljbee/testfluskapp:test').tag("${BUILD_NUMBER}")
-        //             //docker.image('kirilljbee/testfluskapp:test').push("${BUILD_NUMBER}")
+                    docker.image('${NAME_IMAGE_DEV}').tag('${TAG_IMAGE_PROD}')
+                    docker.image('${NAME_IMAGE_DEV}').push('${TAG_IMAGE_PROD}')
 
-        //             docker.image('kirilljbee/testfluskapp:dev').tag("prod")
-        //             docker.image('kirilljbee/testfluskapp:dev').push("prod")
-
-        //             sh 'docker stop $(docker ps -aq)'
-        //             //!!!!!!
-        //             sh 'docker system prune -af'
-
-        //         }
-        //     } 
-        // }   
+                    sh 'docker stop ${NAME_IMAGE_DEV)'
+    
+                    sh 'docker rmi ${NAME_IMAGE_DEV)'
+                }
+            } 
+        }   
         
-        // stage('deploy production') {
-        //     agent { label 'PQHssh'}
+        stage('deploy production') {
+            agent { label 'PQHssh'}
             
-        //     input {
-        //             message "Ready to deploy?"
-        //             ok "Yes"
-        //         }
-        //     steps {
-        //         sh 'ansible-playbook playbook.yml -i hosts.ini'
-        //         //sh 'ansible all -i hosts.ini -m ping'
-        //         //sh 'ansible-playbook playbook.yml'
-        //         cleanWs()
-        //             dir("${env.WORKSPACE}@tmp") {
-        //                 deleteDir()
-        //             }
-        //              dir("${env.WORKSPACE}@script") {
-        //                  deleteDir()
-        //             }
-        //             dir("${env.WORKSPACE}@script@tmp") {
-        //                 deleteDir()
-        //             }
-        //     }
-        // }
+            input {
+                    message "Ready to deploy?"
+                    ok "Yes"
+                }
+            steps {
+                sh 'ansible-playbook playbook.yml -i hosts.ini'
+                //sh 'ansible all -i hosts.ini -m ping'
+                //sh 'ansible-playbook playbook.yml'
+                cleanWs()
+                    dir("${env.WORKSPACE}@tmp") {
+                        deleteDir()
+                    }
+                     dir("${env.WORKSPACE}@script") {
+                         deleteDir()
+                    }
+                    dir("${env.WORKSPACE}@script@tmp") {
+                        deleteDir()
+                    }
+            }
+        }
     }
 
     post { 
