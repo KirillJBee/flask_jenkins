@@ -47,8 +47,8 @@ pipeline {
 
                     sh 'curl http://localhost:8000'
 
-                    docker.image(${NAME_IMAGE_DEV}).tag(${TAG_IMAGE_PROD})
-                    docker.image(${NAME_IMAGE_DEV}).push(${TAG_IMAGE_PROD})
+                    docker.image('kirilljbee/testfluskapp:dev').tag("${BUILD_ID}")
+                    docker.image('kirilljbee/testfluskapp:dev').push("${BUILD_ID}")
 
                     sh 'docker stop ${NAME_IMAGE_DEV)'
     
