@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
-        NAME_IMAGE_DEV = kirilljbee/testfluskapp:dev
-        
+        NAME_IMAGE_DEV = 'kirilljbee/testfluskapp:dev'
+
     }
 
     stages {
