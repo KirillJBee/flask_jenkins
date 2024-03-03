@@ -8,14 +8,6 @@ pipeline {
             steps {
                 sh 'docker build -t kirilljbee/testfluskapp:latest .'    
             }
-        }
-
-        stage('push docker image') {
-
-            steps {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push kirilljbee/testfluskapp:latest'
-            }
         }  
         
     }
