@@ -52,8 +52,7 @@ pipeline {
                     docker.image("${NAME_IMAGE_DEV}").push("${TAG_IMAGE_PROD}")
 
                     sh 'docker stop -t 5 ${NAME_CONTAINER_DEV}'
-                    sh 'docker rmi ${NAME_IMAGE_DEV}' 
-                    //sh 'docker images -a | grep "${NAME_PROJECT}" | awk '{print $3}' | xargs docker rmi -f'
+                    sh 'docker images -a | grep "${NAME_PROJECT}" | awk '{print $3}' | xargs docker rmi -f'
                 }
             } 
         }   
