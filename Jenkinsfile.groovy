@@ -40,7 +40,6 @@ pipeline {
 
             steps {
                 script {
-                    sh 'docker stop $(docker ps -aq)'
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                     sh 'docker pull ${NAME_IMAGE_DEV}'
                     sh 'docker run -d --rm -p 8000:8000 ${NAME_IMAGE_DEV}'
