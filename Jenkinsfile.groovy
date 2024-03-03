@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'PQHssh'}
+    agent { label 'awsssh'}
     
     stages {
 
