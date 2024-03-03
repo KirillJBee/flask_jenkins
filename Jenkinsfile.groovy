@@ -48,13 +48,12 @@ pipeline {
 
                     sh 'curl http://localhost:8000'
 
-                    docker.image('kirilljbee/testfluskapp:dev').tag("${TAG_IMAGE_PROD}")
-                    docker.image('kirilljbee/testfluskapp:dev').push("${TAG_IMAGE_PROD}")
+                    docker.image("${NAME_IMAGE_DEV}").tag("${TAG_IMAGE_PROD}")
+                    docker.image("${NAME_IMAGE_DEV}").push("${TAG_IMAGE_PROD}")
 
-                    //sh 'docker stop ${NAME_CONTAINER_CONT)'
+                    sh 'docker stop ${NAME_CONTAINER_CONT)'
 
-    
-                    //sh 'docker rmi ${NAME_IMAGE_DEV)'
+                    sh 'docker rmi ${NAME_IMAGE_DEV)'
                 }
             } 
         }   
