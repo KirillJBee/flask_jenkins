@@ -29,7 +29,7 @@ pipeline {
                 sh 'docker rmi ${NAME_IMAGE_DEV}'
                 //Удаляем рабочие директории проекта
                 cleanWs()
-                    dir("${env.WORKSPACE}$@tmp") {
+                    dir("${env.WORKSPACE}@tmp") {
                         deleteDir()
                     }
             }
