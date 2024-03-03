@@ -53,7 +53,7 @@ pipeline {
 
                     sh 'docker stop ${NAME_CONTAINER_CONT)'
 
-                    sh 'docker rmi ${NAME_IMAGE_DEV)'
+                    //sh 'docker rmi ${NAME_IMAGE_DEV)'
                 }
             } 
         }   
