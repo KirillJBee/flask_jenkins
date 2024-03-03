@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
         NAME_IMAGE_DEV = 'kirilljbee/testfluskapp:dev'
-        NAME_CONTAINER_CONT = 'testfluskapp_dev'
+        NAME_CONTAINER_DEV = 'testfluskapp_dev'
         TAG_IMAGE_PROD = 'prod'
 
     }
@@ -51,7 +51,7 @@ pipeline {
                     docker.image("${NAME_IMAGE_DEV}").tag("${TAG_IMAGE_PROD}")
                     docker.image("${NAME_IMAGE_DEV}").push("${TAG_IMAGE_PROD}")
 
-                    sh 'docker stop ${NAME_CONTAINER_CONT)'
+                    sh 'timeout 10s docker stop ${AME_CONTAINER_DEV)'
 
                     //sh 'docker rmi ${NAME_IMAGE_DEV)'
                 }
