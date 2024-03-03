@@ -50,9 +50,9 @@ pipeline {
                     docker.image('kirilljbee/testfluskapp:dev').tag("${TAG_IMAGE_PROD}")
                     docker.image('kirilljbee/testfluskapp:dev').push("${TAG_IMAGE_PROD}")
 
-                    sh 'docker stop ${NAME_IMAGE_DEV)'
+                    //sh 'docker stop ${NAME_IMAGE_DEV)'
     
-                    sh 'docker rmi ${NAME_IMAGE_DEV)'
+                    //sh 'docker rmi ${NAME_IMAGE_DEV)'
                 }
             } 
         }   
