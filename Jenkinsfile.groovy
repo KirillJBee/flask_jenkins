@@ -20,25 +20,24 @@ pipeline {
             }
         }
 
-        // stage('push devimage') {
-        //     agent { label 'awsssh'} 
+        stage('push devimage') {
+            agent { label 'awsssh'} 
 
-        //     steps {
-        //         sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-        //         sh 'docker push ${NAME_IMAGE_DEV}'
-        //         // sh 'docker stop '
-        //         // sh 'docker system prune -af'
-        //         cleanWs()
-        //             dir("${env.WORKSPACE}@tmp") {
-        //                 deleteDir()
-        //             }
-        //              dir("${env.WORKSPACE}@script") {
-        //                 deleteDir()
-        //             }
-        //             dir("${env.WORKSPACE}@script@tmp") {
-        //                 deleteDir()
-        //             }
-        //     }
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'docker push ${NAME_IMAGE_DEV}'
+                sh 'docker rmi ${NAME_IMAGE_DEV}'
+                cleanWs()
+                    dir("${env.WORKSPACE}@tmp") {
+                        deleteDir()
+                    }
+                     dir("${env.WORKSPACE}@script") {
+                        deleteDir()
+                    }
+                    dir("${env.WORKSPACE}@script@tmp") {
+                        deleteDir()
+                    }
+            }
         // }  
         
         // stage('test devimage & push prodimage') {
