@@ -57,30 +57,30 @@ pipeline {
             } 
         }   
         
-        // stage('deploy production') {
-        //     agent { label 'PQHssh'}
+        stage('deploy production') {
+            agent { label 'PQHssh'}
             
-        //     input {
-        //             message "Ready to deploy?"
-        //             ok "Yes"
-        //         }
+            input {
+                    message "Ready to deploy?"
+                    ok "Yes"
+                }
 
-        //     steps {
-        //         sh 'ansible-playbook playbook.yml -i hosts.ini'
-        //         //sh 'ansible all -i hosts.ini -m ping'
-        //         //sh 'ansible-playbook playbook.yml'
-        //         cleanWs()
-        //             dir("${env.WORKSPACE}@tmp") {
-        //                 deleteDir()
-        //             }
-        //              dir("${env.WORKSPACE}@script") {
-        //                  deleteDir()
-        //             }
-        //             dir("${env.WORKSPACE}@script@tmp") {
-        //                 deleteDir()
-        //             }
-        //     }
-        // }
+            steps {
+                sh 'ansible-playbook playbook.yml -i hosts.ini'
+                //sh 'ansible all -i hosts.ini -m ping'
+                //sh 'ansible-playbook playbook.yml'
+                cleanWs()
+                    dir("${env.WORKSPACE}@tmp") {
+                        deleteDir()
+                    }
+                     dir("${env.WORKSPACE}@script") {
+                         deleteDir()
+                    }
+                    dir("${env.WORKSPACE}@script@tmp") {
+                        deleteDir()
+                    }
+            }
+        }
     }
 
     post { 
