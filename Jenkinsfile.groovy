@@ -27,7 +27,7 @@ pipeline {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh 'docker push ${NAME_IMAGE_DEV}'
                 sh 'docker rmi ${NAME_IMAGE_DEV}'
-                cleanWs()
+                cleanWs(${JOB_NAME})
                     dir("${env.WORKSPACE}@tmp") {
                         deleteDir()
                     }
