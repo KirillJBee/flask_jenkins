@@ -6,7 +6,6 @@ pipeline {
         NAME_IMAGE_DEV = 'kirilljbee/testfluskapp:dev'
         NAME_CONTAINER_DEV = 'testfluskapp_dev'
         TAG_IMAGE_PROD = 'prod'
-
     }
 
     stages {
