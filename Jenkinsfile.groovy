@@ -10,7 +10,7 @@ pipeline {
     }
 
     stages {
-ls
+
         // stage('build devimage') { 
         //     agent { 
         //         label 'awsssh'
