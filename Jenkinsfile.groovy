@@ -7,6 +7,7 @@ pipeline {
         NAME_IMAGE_DEV = 'kirilljbee/testfluskapp:dev'
         NAME_CONTAINER_DEV = 'testfluskapp_dev'
         TAG_IMAGE_PROD = 'prod'
+        KEY_PROD = credentials ('passprodkey')
     }
 
     stages {
@@ -67,7 +68,7 @@ pipeline {
 
             steps {
                 sh 'chmod 600 PRIVATE_KEY_FILE'
-                sh 'ansible all -i inventory -m ping --key-file PRIVATE_KEY_FILE'
+                sh 'ansible all -i inventory -m ping --key-file $KEY_PROD'
              
                 //sh 'ansible-playbook playbook.yml'
                 
