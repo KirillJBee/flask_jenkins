@@ -68,14 +68,19 @@ pipeline {
             //     }
 
             steps {
-                sh 'ansible all -i inventory -m ping --connection-password-file ${PROD_CREDENTIALS}'
-             
-                //sh 'ansible-playbook playbook.yml'
+                script {
+                    withCredentials([file(credentialsId: 'key_to_prod_server', variable: 'secretFile')]) {
+                        sh ('cat $PROD_CREDENTIALS')
+                //sh 'ansible all -i inventory -m ping --connection-password-file $PROD_CREDENTIALS'
+                    }
                 
+                }
             }
         }
-    }
 
+
+
+    }
     
 }
 
