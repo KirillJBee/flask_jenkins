@@ -61,13 +61,8 @@ pipeline {
             agent { label 'PQHssh' }
             
 
-            steps {
-                script {
-                    withCredentials([file(credentialsId: 'key_to_prod_server', variable: 'KEY_SERVER_PROD')]) {
-                        //sh 'cat $KEY_SERVER_PROD'
-                        sh ('ansible all -i inventory --connection-password-file $KEY_SERVER_PROD')
-               
-                    }
+            steps {    
+                sh ('ansible all -i inventory --connection-password-file /home/ansible_sett/PRIVATE_KEY_FILE')
                 }
             }
         }
