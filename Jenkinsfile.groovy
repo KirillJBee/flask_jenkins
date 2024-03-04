@@ -62,7 +62,7 @@ pipeline {
             
 
             steps {    
-                sh ('ansible all -i inventory -m ping --connection-password-file /home/ansible_sett/PRIVATE_KEY_FILE')
+                sh ('ansible all -i inventory -m ping --connection-password-file PRIVATE_KEY_FILE')
             }
            
         }
