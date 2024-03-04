@@ -3,8 +3,6 @@ pipeline {
 
     environment {
         NAME_PROJECT = 'testfluskapp'
-        //DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
-        //PROD_CREDENTIALS = credentials('key_to_prod_server')
         NAME_IMAGE_DEV = 'kirilljbee/testfluskapp:dev'
         NAME_CONTAINER_DEV = 'testfluskapp_dev'
         TAG_IMAGE_PROD = 'prod'
@@ -62,19 +60,15 @@ pipeline {
         stage('deploy production') {
             agent { label 'PQHssh' }
             
-            // input {
-            //         message "Ready to deploy?"
-            //         ok "Yes"
-            //     }
 
             steps {
                 script {
-                    withCredentials([file(credentialsId: 'key_to_prod_server', variable: 'secretFile')]) {
-                        sh ('cat $PROD_CREDENTIALS')
-                //sh 'ansible all -i inventory -m ping --connection-password-file $PROD_CREDENTIALS'
+                    withCredentials([file(credentialsId: 'key_to_prod_server', variable: 'KEY_SERVER_PROD')]) {
+                        sh 'cat $KEY_SERVER_PROD'
+                        //sh ('ansible all -i inventory --connection-password-file $secretFile')
+               
                     }
-                
-                }
+                                }
             }
         }
 
