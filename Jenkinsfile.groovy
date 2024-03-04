@@ -10,7 +10,7 @@ pipeline {
     }
 
     stages {
-
+ls
         // stage('build devimage') { 
         //     agent { 
         //         label 'awsssh'
@@ -66,6 +66,7 @@ pipeline {
             //     }
 
             steps {
+
                 sh 'ansible all -i inventory -m ping --private-key hostkey'
              
                 //sh 'ansible-playbook playbook.yml'
