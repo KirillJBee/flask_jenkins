@@ -68,7 +68,6 @@ pipeline {
             //     }
 
             steps {
-                sh 'chmod 600 PRIVATE_KEY_FILE'
                 sh 'ansible all -i inventory -m ping --connection-password-file $KEY_PROD'
              
                 //sh 'ansible-playbook playbook.yml'
