@@ -66,8 +66,8 @@ ls
             //     }
 
             steps {
-
-                sh 'ansible all -i inventory -m ping --private-key hostkey'
+                sh 'echo Hello!'
+                //sh 'ansible all -i inventory -m ping --private-key hostkey'
              
                 //sh 'ansible-playbook playbook.yml'
                 
