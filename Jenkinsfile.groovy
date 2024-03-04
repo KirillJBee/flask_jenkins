@@ -66,8 +66,8 @@ pipeline {
             //     }
 
             steps {
-                sh 'echo Hello!'
-                //sh 'ansible all -i inventory -m ping --private-key hostkey'
+                sh 'cmod 600 hostkey'
+                sh 'ansible all -i inventory -m ping --private-key hostkey'
              
                 //sh 'ansible-playbook playbook.yml'
                 
