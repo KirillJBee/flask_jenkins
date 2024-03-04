@@ -63,11 +63,9 @@ pipeline {
 
             steps {    
                 sh ('ansible all -i inventory --connection-password-file /home/ansible_sett/PRIVATE_KEY_FILE')
-                }
             }
+           
         }
-
-
 
     }
     
