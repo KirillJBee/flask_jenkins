@@ -4,7 +4,7 @@ pipeline {
     environment {
         NAME_PROJECT = 'testfluskapp'
         //DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
-        PROD_CREDENTIALS = credentials('key_to_prod_server')
+        //PROD_CREDENTIALS = credentials('key_to_prod_server')
         NAME_IMAGE_DEV = 'kirilljbee/testfluskapp:dev'
         NAME_CONTAINER_DEV = 'testfluskapp_dev'
         TAG_IMAGE_PROD = 'prod'
@@ -60,7 +60,7 @@ pipeline {
         // }   
         
         stage('deploy production') {
-            agent { label 'PQHssh'}
+            agent { label 'PQHssh' }
             
             // input {
             //         message "Ready to deploy?"
