@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         NAME_PROJECT = 'testfluskapp'
-        DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
+        //DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
         PROD_CREDENTIALS = credentials('passprodkey')
         NAME_IMAGE_DEV = 'kirilljbee/testfluskapp:dev'
         NAME_CONTAINER_DEV = 'testfluskapp_dev'
