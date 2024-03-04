@@ -64,11 +64,11 @@ pipeline {
             steps {
                 script {
                     withCredentials([file(credentialsId: 'key_to_prod_server', variable: 'KEY_SERVER_PROD')]) {
-                        sh 'cat $KEY_SERVER_PROD'
-                        //sh ('ansible all -i inventory --connection-password-file $secretFile')
+                        //sh 'cat $KEY_SERVER_PROD'
+                        sh ('ansible all -i inventory --connection-password-file $KEY_SERVER_PROD')
                
                     }
-                                }
+                }
             }
         }
 
