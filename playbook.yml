@@ -30,10 +30,6 @@
       docker_login:
         username: "{{ DOCKER_USERNAME }}"
         password: "{{ DOCKERHUB_PASSWORD }}"
-    # - name: Pull testfluskapp:latest Docker container
-    #   docker_image:
-    #     name: kirilljbee/testfluskapp:prod
-    #     source: pull
     - name: Pull and Run testfluskapp:prod latest image
       docker_container:
         name: testfluskapp_prod
