@@ -64,6 +64,7 @@ pipeline {
             steps {  
 
                 script {
+                    
                     sh 'ansible all -i inventory -m ping --connection-password-file $KEY_PROD_SERVER'
                 }         
             }        
