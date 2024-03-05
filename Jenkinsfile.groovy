@@ -66,7 +66,7 @@ pipeline {
                 }
 
             steps {
-                sh 'ansible-playbook -u root playbook.yml --connection-password-file PRIVATE_KEY_FILE -i inventory'
+                sh 'ansible-playbook -u root -i inventory --connection-password-file PRIVATE_KEY_FILE playbook.yml'
                 //sh 'ansible all -i hosts.ini -m ping'
                 //sh 'ansible-playbook playbook.yml'
                 cleanWs()
