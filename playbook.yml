@@ -14,10 +14,10 @@
       docker_login:
         username: kirilljbee
         password: keCD_ACKJf?++(8
-    # - name: Pull testfluskapp:latest Docker container
-    #   docker_image:
-    #     name: kirilljbee/testfluskapp:prod
-    #     source: pull
+    - name: Pull testfluskapp:latest Docker container
+      docker_image:
+        name: kirilljbee/testfluskapp:prod
+        source: pull
     - name: Pull and Run testfluskapp:latest Docker container
       docker_container:
         name: testfluskapp_prod

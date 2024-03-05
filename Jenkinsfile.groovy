@@ -66,7 +66,7 @@ pipeline {
                 }
 
             steps {
-                sh 'ansible-playbook playbook.yml -i hosts.ini'
+                sh 'ansible-playbook -u root playbook.yml -i inventory'
                 //sh 'ansible all -i hosts.ini -m ping'
                 //sh 'ansible-playbook playbook.yml'
                 cleanWs()
