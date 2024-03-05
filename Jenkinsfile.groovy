@@ -60,9 +60,9 @@ pipeline {
         // }   
         
         stage('deploy production') {
+
             agent { label 'PQHssh' }
             
-
             steps {  
                 
                     sh ('ansible all -i inventory -m ping --connection-password-file ${KEY_PROD_SERVER}')
