@@ -2,7 +2,11 @@
 - name: "Install testfluskapp"
   become: yes
   hosts: [proddeploy]
-  var 
+  vars:
+    DOCKER_USERNAME: !vault |
+        
+    DOCKERHUB_PASSWORD: !vault |
+        
   tasks:
     - name: Stop Running testfluskapp_prod container
       docker_container:
