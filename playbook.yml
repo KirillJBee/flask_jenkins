@@ -2,6 +2,7 @@
 - name: "Install testfluskapp"
   become: yes
   hosts: [proddeploy]
+  var 
   tasks:
     - name: Stop Running testfluskapp_prod container
       docker_container:
