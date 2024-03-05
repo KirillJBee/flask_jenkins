@@ -23,8 +23,9 @@
         name: testfluskapp_prod
         state: absent
     - name: Remove testfluskapp_prod Image 
-      shell: |
-         docker rmi kirilljbee/testfluskapp:prod;
+      docker_image:
+        name: kirilljbee/testfluskapp:prod
+        state: absent
     - name: Log into DockerHub
       docker_login:
         username: "{{ DOCKER_USERNAME }}"
