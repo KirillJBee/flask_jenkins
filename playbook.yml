@@ -2,8 +2,23 @@
 - name: "Install testfluskapp"
   become: yes
   hosts: [proddeploy]
+  vars:
+    DOCKER_USERNAME: !vault |
+              $ANSIBLE_VAULT;1.1;AES256
+              62316133336331356466656531623364343532376162636266643232393434343335316465363163
+              3935646331386432386266353761386537356437353131650a313561303830363264346338656336
+              64393038646632373931623164353337303230613034313461353261663837353166326134313262
+              6430623264353733360a643639346561376263356239616433303630363763333364366562323633
+              3338
+    DOCKERHUB_PASSWORD: !vault |
+              $ANSIBLE_VAULT;1.1;AES256
+              38646166353733363165356134396632643834366562656561303361646630646461306633633363
+              6335666330346262663438393337306464376639656136620a383133396263666432363663633232
+              39346566373138333865373764623561653262656133623437303533386432386530616665323835
+              6230646465323362660a626438613263393333376161373966663433313531643331616363333461
+              3437
   tasks:
-    - name: Stop Running testfluskapp_prod container
+    - name: Stop and Delete Running testfluskapp_prod container
       docker_container:
         name: testfluskapp_prod
         state: absent
@@ -13,17 +28,12 @@
         state: absent
     - name: Log into DockerHub
       docker_login:
-        username: kirilljbee
-        password: keCD_ACKJf?++(8
-    - name: Pull testfluskapp:latest Docker container
-      docker_image:
-        name: kirilljbee/testfluskapp:prod
-        source: pull
-    - name: Pull and Run testfluskapp:latest Docker container
+        username: "{{ DOCKER_USERNAME }}"
+        password: "{{ DOCKERHUB_PASSWORD }}"
+    - name: Pull and Run testfluskapp:prod latest image
       docker_container:
         name: testfluskapp_prod
         image: kirilljbee/testfluskapp:prod
         state: started
         ports:
           - "8000:8000"
-    
