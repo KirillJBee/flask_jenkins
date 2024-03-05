@@ -66,17 +66,16 @@ pipeline {
                 }
 
             steps {
-                sh 'ansible-playbook -u root -i inventory --connection-password-file PRIVATE_KEY_FILE playbook.yml'
-                //sh 'ansible all -i hosts.ini -m ping'
-                //sh 'ansible-playbook playbook.yml'
+                
+                script {
+                    withCredentials([file(credentialsId: 'key_to_prod_server', variable: 'KEY_PROD_SERVER')]) {
+                        //sh 'ansible all -i inventory -m ping --connection-password-file $KEY_PROD_SERVER'
+                        sh 'ansible-playbook -i inventory -u root --connection-password-file $KEY_PROD_SERVER --vault-password-file vaultkey playbook.yml'
+                    }
+                }         
+             
                 cleanWs()
                     dir("${env.WORKSPACE}@tmp") {
-                        deleteDir()
-                    }
-                     dir("${env.WORKSPACE}@script") {
-                         deleteDir()
-                    }
-                    dir("${env.WORKSPACE}@script@tmp") {
                         deleteDir()
                     }
             }
@@ -102,6 +101,6 @@ pipeline {
                 subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) was aborted",
                 body: "Please go to ${BUILD_URL} and verify the build" 
             }
-        }
+    }
 }
 
