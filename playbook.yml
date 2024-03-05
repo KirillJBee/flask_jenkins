@@ -13,8 +13,8 @@
          docker rmi kirilljbee/testfluskapp:prod;
     - name: Log into DockerHub
       docker_login:
-        username: kirilljbee
-        password: keCD_ACKJf?++(8
+        username: "{{ DOCKER_USERNAME }}"
+        password: "{{ DOCKERHUB_PASSWORD }}"
     # - name: Pull testfluskapp:latest Docker container
     #   docker_image:
     #     name: kirilljbee/testfluskapp:prod
