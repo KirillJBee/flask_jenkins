@@ -6,6 +6,7 @@ pipeline {
         NAME_IMAGE_DEV = 'kirilljbee/testfluskapp:dev'
         NAME_CONTAINER_DEV = 'testfluskapp_dev'
         TAG_IMAGE_PROD = 'prod'
+
         
     }
 
@@ -61,8 +62,13 @@ pipeline {
             agent { label 'PQHssh' }
             
 
-            steps {    
-                sh ('ansible all -i inventory -m ping --connection-password-file /home/ansible_sett/PRIVATE_KEY_FILE')
+            steps {  
+                script {
+                    withCredentials([file(credentialsId: 'key_to_prod_server', variable: 'secretFile')]) {
+                    sh ('ansible all -i inventory -m ping --connection-password-file $secretFile')
+                    }  
+                }
+                  //sh ('ansible all -i inventory -m ping --connection-password-file /home/ansible_sett/PRIVATE_KEY_FILE')
             }
            
         }
