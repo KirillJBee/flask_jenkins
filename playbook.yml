@@ -17,9 +17,8 @@
           39303037663962313833393863333633373332663865323538376534656563636237333731306563
           6465316332383762300a646435313561353063323765643961303863353034656438383433383630
           3833
-        
   tasks:
-    - name: Stop Running testfluskapp_prod container
+    - name: Stop and Delete Running testfluskapp_prod container
       docker_container:
         name: testfluskapp_prod
         state: absent
