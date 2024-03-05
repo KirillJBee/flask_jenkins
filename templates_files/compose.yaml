@@ -1,9 +1,0 @@
-services:
-  web: 
-    image: kirilljbee/testfluskapp:prod
-    # flask requires SIGINT to stop gracefully
-    # (default stop signal from Compose is SIGTERM)
-    container_name: testfluskapp_prod
-    stop_signal: SIGINT
-    ports:
-      - '8000:8000'
