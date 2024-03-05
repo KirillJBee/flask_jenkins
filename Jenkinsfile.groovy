@@ -64,7 +64,10 @@ pipeline {
             steps {  
 
                 script {
-                    withCredentials([file(credentialsId: 'key_to_prod_server', variable: 'KEY_PROD_SERVER')]) {
+                    withCredentials([
+                        file(credentialsId: 'key_to_prod_server', variable: 'KEY_PROD_SERVER'
+                        
+                        )]) {
                         //sh 'ansible all -i inventory -m ping --connection-password-file $KEY_PROD_SERVER'
                         sh 'ansible-playbook -i inventory -u root --connection-password-file $KEY_PROD_SERVER --vault-password-file /home/ansible_sett/vaultkey playbook.yml'
                     }
