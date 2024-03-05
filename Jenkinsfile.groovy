@@ -66,7 +66,7 @@ pipeline {
                 }
 
             steps {
-                
+                //переделать c env
                 script {
                     withCredentials([
                         file(credentialsId: 'key_to_prod_server', variable: 'KEY_PROD_SERVER'),
@@ -76,7 +76,7 @@ pipeline {
                         sh 'ansible-playbook -i inventory -u root --connection-password-file $KEY_PROD_SERVER --vault-password-file $ANSIBLE_VAULT_KEY playbook.yml'
                     }
                 }         
-             
+                //Удаляем рабочие директории проекта
                 cleanWs()
                     dir("${env.WORKSPACE}@tmp") {
                         deleteDir()
