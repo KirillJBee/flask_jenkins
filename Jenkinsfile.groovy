@@ -6,7 +6,7 @@ pipeline {
         NAME_IMAGE_DEV = 'kirilljbee/testfluskapp:dev'
         NAME_CONTAINER_DEV = 'testfluskapp_dev'
         TAG_IMAGE_PROD = 'prod'
-        KEY_PROD_SERVER = credentials'key_to_prod_server'
+        KEY_PROD_SERVER = credentials('key_to_prod_server')
 
         
     }
