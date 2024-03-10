@@ -1,6 +1,6 @@
 ---
 - name: "Install testfluskapp"
-  become: yes
+  become: [proddeploy]
   hosts: all
   vars:
     DOCKER_USERNAME: !vault |
