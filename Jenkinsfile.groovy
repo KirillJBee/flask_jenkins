@@ -70,12 +70,14 @@ pipeline {
                 script {
                     withCredentials([
                         file(credentialsId: 'key_to_prod_server', variable: 'KEY_PROD_SERVER'),
-                        file(credentialsId: 'vaultkey', variable: 'ANSIBLE_VAULT_KEY')
+                        file(credentialsId: 'vaultkey', variable: 'ANSIBLE_VAULT_KEY'),
+                        file(credentialsId: 'ip_host', variable: 'IP_HOST')
                         ]) {
                         //sh 'ansible all -i inventory -m ping --connection-password-file $KEY_PROD_SERVER'
-                        sh 'ansible-playbook -i inventory -u root --connection-password-file $KEY_PROD_SERVER --vault-password-file $ANSIBLE_VAULT_KEY playbook.yml'
+                        sh 'ansible-playbook -i $IP_HOST -u root --connection-password-file $KEY_PROD_SERVER --vault-password-file $ANSIBLE_VAULT_KEY playbook.yml'
                     }
-                }         
+                }        
+                // инвентори сделать секретным файлом 
                 //Удаляем рабочие директории проекта
                 cleanWs()
                     dir("${env.WORKSPACE}@tmp") {
