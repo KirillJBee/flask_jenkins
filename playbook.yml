@@ -1,7 +1,7 @@
 ---
 - name: "Install testfluskapp"
   become: yes
-  hosts: [proddeploy]
+  hosts: all
   vars:
     DOCKER_USERNAME: !vault |
               $ANSIBLE_VAULT;1.1;AES256
