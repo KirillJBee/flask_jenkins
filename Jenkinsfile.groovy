@@ -60,25 +60,20 @@ pipeline {
         stage('deploy production') {
             agent { label 'PQHssh'}
             
+            environment {
+                KEY_PROD_SERVER = credentials('key_to_prod_server')
+                ANSIBLE_VAULT_KEY = credentials('vaultkey')
+                IP_HOST = credentials('ip_host')
+            }
+
             input {
                     message "Ready to deploy?"
                     ok "Yes"
                 }
 
-            steps {
-                //переделать c env
-                script {
-                    withCredentials([
-                        file(credentialsId: 'key_to_prod_server', variable: 'KEY_PROD_SERVER'),
-                        file(credentialsId: 'vaultkey', variable: 'ANSIBLE_VAULT_KEY'),
-                        file(credentialsId: 'ip_host', variable: 'IP_HOST')
-                        ]) {
-                        //sh 'ansible all -i inventory -m ping --connection-password-file $KEY_PROD_SERVER'
-                        sh 'ansible-playbook -i $IP_HOST -u root --connection-password-file $KEY_PROD_SERVER --vault-password-file $ANSIBLE_VAULT_KEY playbook.yml'
-                    }
-                }        
-                // инвентори сделать секретным файлом 
-                //Удаляем рабочие директории проекта
+            steps {                      
+                sh 'ansible-playbook -i $IP_HOST -u root --connection-password-file $KEY_PROD_SERVER --vault-password-file $ANSIBLE_VAULT_KEY playbook.yml'
+                
                 cleanWs()
                     dir("${env.WORKSPACE}@tmp") {
                         deleteDir()
@@ -89,23 +84,23 @@ pipeline {
 
     post { 
 
-            success {
-                mail to: 'jbeework@gmail.com',
-                subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) was successfully completed!",
-                body: "Please go to ${BUILD_URL} and verify the build"      
-            }
+        success {
+            mail to: 'jbeework@gmail.com',
+            subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) was successfully completed!",
+            body: "Please go to ${BUILD_URL} and verify the build"      
+        }
 
-            failure {
-                mail to: 'jbeework@gmail.com',
-                subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) ended unsuccessfully!",
-                body: "Please go to ${BUILD_URL} and verify the build"              
-            }
+        failure {
+            mail to: 'jbeework@gmail.com',
+            subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) ended unsuccessfully!",
+            body: "Please go to ${BUILD_URL} and verify the build"              
+        }
 
-            aborted {
-                mail to: 'jbeework@gmail.com',
-                subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) was aborted",
-                body: "Please go to ${BUILD_URL} and verify the build" 
-            }
+        aborted {
+            mail to: 'jbeework@gmail.com',
+            subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) was aborted",
+            body: "Please go to ${BUILD_URL} and verify the build" 
+        }
     }
 }
 
