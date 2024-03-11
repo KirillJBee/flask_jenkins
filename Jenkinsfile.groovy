@@ -4,7 +4,7 @@ pipeline {
     environment {
         NAME_PROJECT = 'testfluskapp'
         DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
-        KEY_PROD_SERVER = credentials ('key_to_prod_server')
+        KEY_PROD_SERVER = file('key_to_prod_server')
         NAME_IMAGE_DEV = 'kirilljbee/testfluskapp:dev'
         NAME_CONTAINER_DEV = 'testfluskapp_dev'
         TAG_IMAGE_PROD = 'prod'
