@@ -4,7 +4,9 @@ pipeline {
     environment {
         NAME_PROJECT = 'testfluskapp'
         DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
-        KEY_PROD_SERVER = file('key_to_prod_server')
+        KEY_PROD_SERVER = credentials('key_to_prod_server')
+        ANSIBLE_VAULT_KEY = credentials('vaultkey')
+        IP_HOST = credentials('ip_host')
         NAME_IMAGE_DEV = 'kirilljbee/testfluskapp:dev'
         NAME_CONTAINER_DEV = 'testfluskapp_dev'
         TAG_IMAGE_PROD = 'prod'
@@ -67,25 +69,15 @@ pipeline {
                     ok "Yes"
                 }
 
-            steps {
-                //переделать c env
-                script {
-                    withCredentials([
-                        file(credentialsId: 'vaultkey', variable: 'ANSIBLE_VAULT_KEY'),
-                        file(credentialsId: 'ip_host', variable: 'IP_HOST')
-                        ]) {
-                        //sh 'ansible all -i inventory -m ping --connection-password-file $KEY_PROD_SERVER'
-                        sh 'ansible-playbook -i $IP_HOST -u root --connection-password-file $KEY_PROD_SERVER --vault-password-file $ANSIBLE_VAULT_KEY playbook.yml'
-                    }
-                }        
-                // инвентори сделать секретным файлом 
-                //Удаляем рабочие директории проекта
+            steps {                      
+                sh 'ansible-playbook -i $IP_HOST -u root --connection-password-file $KEY_PROD_SERVER --vault-password-file $ANSIBLE_VAULT_KEY playbook.yml'
+                
                 cleanWs()
                     dir("${env.WORKSPACE}@tmp") {
                         deleteDir()
                     }
             }
-        }
+        
     }
 
     post { 
