@@ -4,9 +4,6 @@ pipeline {
     environment {
         NAME_PROJECT = 'testfluskapp'
         DOCKERHUB_CREDENTIALS = credentials('kirilljbee_dockerhub')
-        KEY_PROD_SERVER = credentials('key_to_prod_server')
-        ANSIBLE_VAULT_KEY = credentials('vaultkey')
-        IP_HOST = credentials('ip_host')
         NAME_IMAGE_DEV = 'kirilljbee/testfluskapp:dev'
         NAME_CONTAINER_DEV = 'testfluskapp_dev'
         TAG_IMAGE_PROD = 'prod'
@@ -64,6 +61,12 @@ pipeline {
         stage('deploy production') {
             agent { label 'PQHssh'}
             
+            environment {
+                KEY_PROD_SERVER = credentials('key_to_prod_server')
+                ANSIBLE_VAULT_KEY = credentials('vaultkey')
+                IP_HOST = credentials('ip_host')
+            }
+
             input {
                     message "Ready to deploy?"
                     ok "Yes"
@@ -79,7 +82,9 @@ pipeline {
             }
         }
 
-        post { 
+    }
+
+    post { 
 
             success {
                 mail to: 'jbeework@gmail.com',
@@ -99,6 +104,5 @@ pipeline {
                 body: "Please go to ${BUILD_URL} and verify the build" 
             }
         }
-    }
 }
 
