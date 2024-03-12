@@ -29,10 +29,10 @@ pipeline {
                 sh 'docker push ${NAME_IMAGE_DEV}'
                 sh 'docker rmi ${NAME_IMAGE_DEV}'
                 //Удаляем рабочие директории проекта
-                // cleanWs()
-                //     dir("${env.WORKSPACE}@tmp") {
-                //         deleteDir()
-                //     }
+                cleanWs()
+                    dir("${env.WORKSPACE}@tmp") {
+                        deleteDir()
+                    }
             }
         }  
         
@@ -73,6 +73,11 @@ pipeline {
 
             steps {                      
                 sh 'ansible-playbook -i $IP_HOST -u root --connection-password-file $KEY_PROD_SERVER --vault-password-file $ANSIBLE_VAULT_KEY playbook.yml'
+                
+                cleanWs()
+                    dir("${env.WORKSPACE}@tmp") {
+                        deleteDir()
+                    }
             }
         }
     }
@@ -95,13 +100,6 @@ pipeline {
             mail to: 'jbeework@gmail.com',
             subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) was aborted",
             body: "Please go to ${BUILD_URL} and verify the build" 
-        }
-        
-        always {
-            cleanWs()
-                    dir("${env.WORKSPACE}@tmp") {
-                        deleteDir()
-                    }
         }
     }
 }
