@@ -96,11 +96,13 @@ pipeline {
             subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) was aborted",
             body: "Please go to ${BUILD_URL} and verify the build" 
         }
-
-        cleanWs()
+        
+        always {
+            cleanWs()
                     dir("${env.WORKSPACE}@tmp") {
                         deleteDir()
                     }
+        }
     }
 }
 
